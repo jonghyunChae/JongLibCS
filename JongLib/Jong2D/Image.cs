@@ -20,7 +20,6 @@ namespace Jong2D
             int access;
             int w, h;
             SDL.SDL_QueryTexture(this.texture, out format, out access, out w, out h);
-            Console.WriteLine($"{w} {h}");
             this.size = new Utility.Size2D(w, h);
         }
 
@@ -78,8 +77,8 @@ namespace Jong2D
 
             var srcRect = new SDL.SDL_Rect()
             {
-                x = rect.left,
-                y = this.height - rect.bottom - rect.height,
+                x = rect.x,
+                y = this.height - rect.y - rect.height,
                 w = rect.width,
                 h = rect.height,
             };
@@ -94,8 +93,8 @@ namespace Jong2D
 
             var srcRect = new SDL.SDL_Rect()
             {
-                x = rect.left,
-                y = this.height - rect.bottom - rect.height,
+                x = rect.x,
+                y = this.height - rect.y - rect.height,
                 w = rect.width,
                 h = rect.height,
             };

@@ -10,21 +10,35 @@ namespace Jong2D.Utility
     {
         Vector2D From { get; set; }
         Vector2D To { get; set; }
+
+        public Line(Vector2D from, Vector2D to)
+        {
+            this.From = from;
+            this.To = to;
+        }
     }
 
     public struct Rectangle
     {
-        public int left { get; set; }
-        public int bottom { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
+        // 좌측하단 지점
+        public Vector2D pos { get; set; }
+        public int x => pos.x;
+        public int y => pos.y;
 
-        public Rectangle(int left = 0, int bottom = 0, int width = 0, int height = 0)
+        public Size2D size { get; set; }
+        public int width => size.width;
+        public int height => size.height;
+
+        public Rectangle(int x = 0, int y = 0, int width = 0, int height = 0)
         {
-            this.left = left;
-            this.bottom = bottom;
-            this.width = width;
-            this.height = height;
+            this.pos = new Vector2D(x, y);
+            this.size = new Size2D(width, height);
+        }
+
+        public Rectangle(Vector2D pos, Size2D size)
+        {
+            this.pos = pos;
+            this.size = size;
         }
     }
 }

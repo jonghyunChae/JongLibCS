@@ -79,11 +79,6 @@ namespace Jong2D
             renderer = SDL.SDL_CreateRenderer(Context.window, -1, render_flag);
             //SDL_ShowCursor(SDL_DISABLE)
 
-            if (lattice_on)
-            {
-                Log("lattice_on");
-            }
-
             ClearWindowNow();
 
             Log("Open screen Success!");
@@ -165,6 +160,8 @@ namespace Jong2D
         public static void UpdateWindow() => SDL.SDL_RenderPresent(renderer);
         public static void ShowCursor() => SDL.SDL_ShowCursor(SDL.SDL_ENABLE);
         public static void HideCursor() => SDL.SDL_ShowCursor(SDL.SDL_DISABLE);
+
+        public static void Delay(double sec) => SDL.SDL_Delay((uint)(sec * 1000));
 
         private static int frame { get; set; }
         private static long lastTick { get; set; }
