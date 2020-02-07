@@ -15,16 +15,12 @@ namespace Jong2D.Utility
         public byte b { get; set; }
         public byte a { get; set; }
 
-        public Color(byte r, byte g, byte b, byte a)
+        public Color(byte r = 0, byte g = 0, byte b = 0, byte a = 0)
         {
             this.r = r;
             this.g = g;
             this.b = b;
             this.a = a;
-        }
-
-        public Color(byte r, byte g, byte b) : this(r, g, b, 0)
-        {
         }
 
         public SDL.SDL_Color ToSDLColor()

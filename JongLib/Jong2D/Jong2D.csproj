@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameEvent.cs" />
     <Compile Include="Utility\Color.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Font.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="SDL2\SDL2_image.cs" />
     <Compile Include="SDL2\SDL2_mixer.cs" />
     <Compile Include="SDL2\SDL2_ttf.cs" />
+    <Compile Include="Utility\Shapes.cs" />
     <Compile Include="Utility\Vector.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -114,4 +116,8 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y $(ProjectDir)$(OutDir) $(ProjectDir)output 
+copy /Y $(ProjectDir)$(OutDir)Dll\ $(ProjectDir)output</PostBuildEvent>
+  </PropertyGroup>
 </Project>

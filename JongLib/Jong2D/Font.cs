@@ -19,14 +19,45 @@ namespace Jong2D
             }
         }
 
-        public void Draw(int x, int y, string str, Color color)
+        public Image CreateImage(string str, Color color)
         {
             var surface = SDL_ttf.TTF_RenderUNICODE_Blended(this.font, str, color.ToSDLColor());
             var texture = SDL.SDL_CreateTextureFromSurface(Context.renderer, surface);
             SDL.SDL_FreeSurface(surface);
-            using (var image = new Image(texture))
+
+            return new Image(texture);
+        }
+
+        public void Render(int x, int y, string str, Color color)
+        {
+            using (var image = this.CreateImage(str, color))
             {
-                image.Draw(x, y);
+                image.Render(x, y);
+            }
+        }
+
+        public void Render(Vector2D pos, string str, Color color)
+        {
+            using (var image = this.CreateImage(str, color))
+            {
+                image.Render(pos);
+            }
+        }
+    }
+
+    public static partial class Context
+    {
+        public static Font LoadFont(string name, int size = 20)
+        {
+            try
+            {
+                var font = new Font(name, size);
+                return font;
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+                return null;
             }
         }
     }

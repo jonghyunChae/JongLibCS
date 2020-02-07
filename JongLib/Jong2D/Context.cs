@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Timers;
 using SDL2;
 
 namespace Jong2D
 {
-    public class Context
+    public static partial class Context
     {
-        public static int canvas_width { get; private set; }
-        public static int canvas_height { get; private set; }
+        public static bool debug_log { get; set; }
+
+        public static string screen_title { get; set; }
+        public static int screen_width { get; private set; }
+        public static int screen_height { get; private set; }
 
         private static IntPtr window { get; set; }
         internal static IntPtr renderer { get; set; }
         private static Font debug_font { get; set; }
         private static bool lattice_on { get; set; }
-        public static bool debug_log { get; set; }
 
         static Context()
         {
@@ -31,17 +34,18 @@ namespace Jong2D
             }
         }
 
-        public static string GetTitle(double fps)
+        public static string GetTitle(int fps)
         {
-            string caption = $"Canvas ({canvas_width.ToString()} x {canvas_height.ToString()}) {fps} FPS"; //.encode('UTF-8')
+            string caption = $"{screen_title} ({screen_width.ToString()} x {screen_height.ToString()}) {fps.ToString()} FPS"; //.encode('UTF-8')
             return caption;
         }
 
         public static string SDLError => SDL.SDL_GetError();
-        public static void Open_Canvas(int width, int height, bool sync = false)
+        public static void CreateWindow(int width, int height, string title = "Jong2D", bool sync = false)
         {
-            canvas_width = width;
-            canvas_height = height;
+            screen_title = title;
+            screen_width = width;
+            screen_height = height;
 
             if (SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING) < 0)
             {
@@ -80,13 +84,13 @@ namespace Jong2D
                 Log("lattice_on");
             }
 
-            Clear_Canvas_Now();
+            ClearWindowNow();
 
-            Log("Open Canvas Success!");
+            Log("Open screen Success!");
             //debug_font = Load_Font("ConsolaMalgun.TTF", 16);
         }
 
-        public static void Close_Canvas()
+        public static void CloseWindow()
         {
             /*
               Mix_HaltMusic()
@@ -103,98 +107,84 @@ namespace Jong2D
             SDL.SDL_Quit();
         }
 
-        public static void Show_Lattice()
+        public static void ShowLattice()
         {
             lattice_on = true;
-            Clear_Canvas();
-            Update_Canvas();
+            ClearWindow();
+            UpdateWindow();
         }
 
-        public static void Hide_Lattice()
+        public static void HideLattice()
         {
             lattice_on = false;
-            Clear_Canvas();
-            Update_Canvas();
+            ClearWindow();
+            UpdateWindow();
         }
 
-        public static void Clear_Canvas()
+        public static void ClearWindow()
         {
             SDL.SDL_SetRenderDrawColor(renderer, 200, 200, 210, 255);
             SDL.SDL_RenderClear(renderer);
 
             if (lattice_on)
             {
-                Console.WriteLine("Clear_Canvas lattice_on");
-
                 SDL.SDL_SetRenderDrawColor(renderer, 180, 180, 180, 255);
-                for (int x = 0; x < canvas_width; x += 10)
+
+                for (int x = 0; x < screen_width; x += 10)
                 {
-                    SDL.SDL_RenderDrawLine(renderer, x, 0, x, canvas_height);
+                    SDL.SDL_RenderDrawLine(renderer, x, 0, x, screen_height);
                 }
-                for (int y = canvas_height - 1; y >= 0; y -= 10)
+
+                for (int y = screen_height - 1; y >= 0; y -= 10)
                 {
-                    SDL.SDL_RenderDrawLine(renderer, 0, y, canvas_width, y);
+                    SDL.SDL_RenderDrawLine(renderer, 0, y, screen_width, y);
                 }
                 SDL.SDL_SetRenderDrawColor(renderer, 160, 160, 160, 255);
 
-                for (int x = 0; x < canvas_width; x += 100)
+                for (int x = 0; x < screen_width; x += 100)
                 {
-                    SDL.SDL_RenderDrawLine(renderer, x, 0, x, canvas_height);
+                    SDL.SDL_RenderDrawLine(renderer, x, 0, x, screen_height);
                 }
-                for (int y = canvas_height - 1; y < canvas_width; y -= 100)
+
+                for (int y = screen_height - 1; y >= 0; y -= 100)
                 {
-                    SDL.SDL_RenderDrawLine(renderer, 0, y, canvas_width, y);
+                    SDL.SDL_RenderDrawLine(renderer, 0, y, screen_width, y);
                 }
             }
+            
         }
 
-        public static void Clear_Canvas_Now()
+        public static void ClearWindowNow()
         {
-            Clear_Canvas();
-            Update_Canvas();
-            Clear_Canvas();
-            Update_Canvas();
+            ClearWindow();
+            UpdateWindow();
+            ClearWindow();
+            UpdateWindow();
         }
 
-        public static void Update_Canvas() => SDL.SDL_RenderPresent(renderer);
-        public static void Show_Cursor() => SDL.SDL_ShowCursor(SDL.SDL_ENABLE);
-        public static void Hide_Cursor() => SDL.SDL_ShowCursor(SDL.SDL_DISABLE);
+        public static void UpdateWindow() => SDL.SDL_RenderPresent(renderer);
+        public static void ShowCursor() => SDL.SDL_ShowCursor(SDL.SDL_ENABLE);
+        public static void HideCursor() => SDL.SDL_ShowCursor(SDL.SDL_DISABLE);
 
-        public static Font Load_Font(string name, int size = 20)
+        private static int frame { get; set; }
+        private static long lastTick { get; set; }
+        public static void PrintFPS()
         {
-            try
+            var now = DateTime.Now.Ticks;
+            var delta = DateTime.Now.Ticks - lastTick;
+            if (delta >= TimeSpan.TicksPerSecond)
             {
-                var font = new Font(name, size);
-                return font;
+                var caption = GetTitle(frame);
+                SDL.SDL_SetWindowTitle(window, caption);
+
+                frame = 0;
+                lastTick = now;
             }
-            catch (Exception e)
-            {
-                Log(e.ToString());
-                return null;
-            }
+
+            ++frame;
         }
 
-        private static DateTime CurTime { get; set; }
-        public static void Print_FPS()
-        {
-            var dt = DateTime.UtcNow - CurTime;
-            CurTime += dt;
-
-            var caption = GetTitle(1.0 / dt.TotalMilliseconds);
-            SDL.SDL_SetWindowTitle(window, caption);
-        }
-
-        internal static SDL.SDL_Rect To_SDL_Rect(int x, int y, int width, int height)
-        {
-            var sdl_rect = new SDL.SDL_Rect();
-            sdl_rect.x = x;
-            sdl_rect.y = y;
-            sdl_rect.w = width;
-            sdl_rect.h = height;
-            return sdl_rect;
-        }
-
-        public string ToUTF8(string str)
+        public static string ToUTF8(string str)
         {
             byte[] bytes = Encoding.Default.GetBytes(str);
             var encoded = Encoding.UTF8.GetString(bytes);
