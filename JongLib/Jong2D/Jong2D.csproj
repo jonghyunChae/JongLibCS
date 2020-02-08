@@ -97,7 +97,44 @@
     <Compile Include="Utility\Shapes.cs" />
     <Compile Include="Utility\Vector.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="SDLLib\x64\libFLAC-8.dll" />
+    <Content Include="SDLLib\x64\libfreetype-6.dll" />
+    <Content Include="SDLLib\x64\libjpeg-9.dll" />
+    <Content Include="SDLLib\x64\libmodplug-1.dll" />
+    <Content Include="SDLLib\x64\libmpg123-0.dll" />
+    <Content Include="SDLLib\x64\libogg-0.dll" />
+    <Content Include="SDLLib\x64\libopus-0.dll" />
+    <Content Include="SDLLib\x64\libopusfile-0.dll" />
+    <Content Include="SDLLib\x64\libpng16-16.dll" />
+    <Content Include="SDLLib\x64\libtiff-5.dll" />
+    <Content Include="SDLLib\x64\libvorbis-0.dll" />
+    <Content Include="SDLLib\x64\libvorbisfile-3.dll" />
+    <Content Include="SDLLib\x64\libwebp-7.dll" />
+    <Content Include="SDLLib\x64\SDL2.dll" />
+    <Content Include="SDLLib\x64\SDL2_image.dll" />
+    <Content Include="SDLLib\x64\SDL2_mixer.dll" />
+    <Content Include="SDLLib\x64\SDL2_ttf.dll" />
+    <Content Include="SDLLib\x64\zlib1.dll" />
+    <Content Include="SDLLib\x86\libFLAC-8.dll" />
+    <Content Include="SDLLib\x86\libfreetype-6.dll" />
+    <Content Include="SDLLib\x86\libjpeg-9.dll" />
+    <Content Include="SDLLib\x86\libmodplug-1.dll" />
+    <Content Include="SDLLib\x86\libmpg123-0.dll" />
+    <Content Include="SDLLib\x86\libogg-0.dll" />
+    <Content Include="SDLLib\x86\libopus-0.dll" />
+    <Content Include="SDLLib\x86\libopusfile-0.dll" />
+    <Content Include="SDLLib\x86\libpng16-16.dll" />
+    <Content Include="SDLLib\x86\libtiff-5.dll" />
+    <Content Include="SDLLib\x86\libvorbis-0.dll" />
+    <Content Include="SDLLib\x86\libvorbisfile-3.dll" />
+    <Content Include="SDLLib\x86\libwebp-7.dll" />
+    <Content Include="SDLLib\x86\SDL2.dll" />
+    <Content Include="SDLLib\x86\SDL2_image.dll" />
+    <Content Include="SDLLib\x86\SDL2_mixer.dll" />
+    <Content Include="SDLLib\x86\SDL2_ttf.dll" />
+    <Content Include="SDLLib\x86\zlib1.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>call $(ProjectDir)copy_output.bat $(PlatformName) $(ProjectDir)$(OutDir) $(ProjectDir)</PostBuildEvent>

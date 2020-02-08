@@ -33,8 +33,8 @@ copy /Y %outDir% %outputDir%
 
 ::echo DLL 폴더에서 SDL 라이브러리 복사
 echo copy DLL Folder(SDL Lib) to targetpath
-echo copy /Y %projectDir%Dll\%platformName%\ %target%
-copy /Y %projectDir%Dll\%platformName%\ %target%
+echo copy /Y %projectDir%SDLLib\%platformName%\ %target%
+copy /Y %projectDir%SDLLib\%platformName%\ %target%
 
 echo end copy_output.bat
 echo .
