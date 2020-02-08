@@ -82,8 +82,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="libfreetype-6.dll" />
-    <Content Include="libpng16-16.dll" />
+    <Content Include="libfreetype-6.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libpng16-16.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\character.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -93,10 +97,18 @@
     <Content Include="Resources\run_animation.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SDL2.dll" />
-    <Content Include="SDL2_image.dll" />
-    <Content Include="SDL2_ttf.dll" />
-    <Content Include="zlib1.dll" />
+    <Content Include="SDL2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_image.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2_ttf.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zlib1.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
