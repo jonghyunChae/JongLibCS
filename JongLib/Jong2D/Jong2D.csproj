@@ -100,7 +100,10 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y $(ProjectDir)$(OutDir) $(ProjectDir)output 
-copy /Y $(ProjectDir)Dll\$(PlatformName)\ $(ProjectDir)output</PostBuildEvent>
+    <PostBuildEvent>call $(ProjectDir)copy_output.bat $(PlatformName) $(ProjectDir)$(OutDir) $(ProjectDir)</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>
