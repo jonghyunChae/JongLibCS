@@ -6,14 +6,14 @@ using SDL2;
 
 namespace Jong2D
 {
-    public class Image : IDisposable
+    public class Image : Resource
     {
         public Utility.Size2D size;
         public int height => size.height;
         public int width => size.width;
         private IntPtr texture { get; set; }
 
-        public Image(IntPtr texture)
+        internal Image(IntPtr texture)
         {
             this.texture = texture;
             uint format;
@@ -120,35 +120,14 @@ namespace Jong2D
             SDL.SDL_SetTextureAlphaMod(this.texture, alpha);
         }
 
-        #region IDisposable Support
-        private bool disposedValue = false;
-
-        protected virtual void Dispose(bool disposing)
+        public override void Close()
         {
-            if (!disposedValue)
+            if (this.texture != IntPtr.Zero)
             {
-                if (disposing)
-                {
-                }
-
-                SDL.SDL_DestroyTexture(texture);
-                texture = IntPtr.Zero;
-
-                disposedValue = true;
+                SDL.SDL_DestroyTexture(this.texture);
+                this.texture = IntPtr.Zero;
             }
         }
-
-        ~Image()
-        {
-            Dispose(false);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 
     public static partial class Context

@@ -14,25 +14,6 @@
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
@@ -85,10 +66,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameEvent.cs" />
+    <Compile Include="Resource\IResource.cs" />
+    <Compile Include="Resource\Sound\Music.cs" />
+    <Compile Include="Resource\Sound\Sound.cs" />
+    <Compile Include="Resource\Sound\Wav.cs" />
     <Compile Include="Utility\Color.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="Font.cs" />
-    <Compile Include="Image.cs" />
+    <Compile Include="Resource\Font.cs" />
+    <Compile Include="Resource\Image.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDL2\SDL2.cs" />
     <Compile Include="SDL2\SDL2_image.cs" />

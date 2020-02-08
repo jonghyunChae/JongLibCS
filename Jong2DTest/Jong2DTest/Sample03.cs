@@ -4,6 +4,7 @@ using SDL2;
 using Jong2D;
 using Jong2D.Utility;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace Jong2DTest
 {
@@ -12,7 +13,7 @@ namespace Jong2DTest
         //Screen dimension constants
         private const int SCREEN_WIDTH = 800;
         private const int SCREEN_HEIGHT = 480;
-
+        private static bool CloseGame { get; set; }
         static void HandleEvents()
         {
             var events = Context.GetGameEvents();
@@ -36,6 +37,7 @@ namespace Jong2DTest
                             else if (e.Key == SDL.SDL_Keycode.SDLK_ESCAPE)
                             {
                                 // 종료 처리
+                                CloseGame = true;
                             }
                         }
                         break;
@@ -49,6 +51,7 @@ namespace Jong2DTest
                     case SDL.SDL_EventType.SDL_QUIT:
                         {
                             // 종료 처리
+                            CloseGame = true;
                         }
                         break;
                     default:
@@ -57,17 +60,35 @@ namespace Jong2DTest
             }
         }
 
+        private static List<IResource> Resources = new List<IResource>();
         static void Main(string[] args)
         {
             Context.CreateWindow(Program.SCREEN_WIDTH, Program.SCREEN_HEIGHT);
+            Context.OnClosed += Close;      // 종료 이벤트 등록
+
+            // 리소스 생성
             Font font = Context.LoadFont(@"Resources\ConsolaMalgun.TTF", 16);
             Image grass = Context.LoadImage(@"Resources\grass.png");
             Image character = Context.LoadImage(@"Resources\run_animation.png");
+            Music music = Context.LoadMusic(@"Resources\background.mp3");
+            music.PlayRepeat();
 
+            Resources.Add(font);
+            Resources.Add(grass);
+            Resources.Add(character);
+            Resources.Add(music);
+
+            // 게임 루프
             var pos = new Vector2D(100, 80);
             int frame = 0;
-            while (true)
+            CloseGame = false;
+            while (CloseGame == false)
             {
+                // 이벤트 처리
+                HandleEvents();
+
+                pos.x += 2;
+
                 Context.ClearWindow();
 
                 font.Render(100, 300, "Sample2", new Color(100, 25, 25));
@@ -78,13 +99,19 @@ namespace Jong2DTest
 
                 Context.UpdateWindow();
 
-                pos.x += 1;
-                Context.Delay(0.2);
-                //SDL.SDL_Delay(200);
-                HandleEvents();
+                Context.Delay(0.1);
             }
 
             Context.CloseWindow();
+        }
+
+        static void Close()
+        {
+            Console.WriteLine("Close!");
+            foreach (var resource in Resources)
+            {
+                resource.Dispose();
+            }
         }
     }
 }

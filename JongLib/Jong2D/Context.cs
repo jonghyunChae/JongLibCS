@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SDL2;
+using System;
 using System.Text;
-using System.Timers;
-using SDL2;
 
 namespace Jong2D
 {
@@ -19,6 +16,9 @@ namespace Jong2D
         internal static IntPtr renderer { get; set; }
         private static Font debug_font { get; set; }
         private static bool lattice_on { get; set; }
+        private static bool IsOpened { get; set; }
+
+        public static event Action OnClosed;
 
         static Context()
         {
@@ -43,6 +43,12 @@ namespace Jong2D
         public static string SDLError => SDL.SDL_GetError();
         public static void CreateWindow(int width, int height, string title = "Jong2D", bool sync = false)
         {
+            if (IsOpened)
+            {
+                CloseWindow();
+            }
+            IsOpened = true;
+
             screen_title = title;
             screen_width = width;
             screen_height = height;
@@ -57,13 +63,12 @@ namespace Jong2D
             {
                 throw new Exception($"TTF Init Fail {SDLError}");
             }
-                        
-            /* 
-            Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG)
-            Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024)
-            Mix_Volume(-1, 128)
-            Mix_VolumeMusic(128)
-            */
+
+
+            SDL_mixer.Mix_Init(SDL_mixer.MIX_InitFlags.MIX_INIT_MP3 | SDL_mixer.MIX_InitFlags.MIX_INIT_OGG);
+            SDL_mixer.Mix_OpenAudio(44100, SDL_mixer.MIX_DEFAULT_FORMAT, SDL_mixer.MIX_DEFAULT_CHANNELS, 1024);
+            SDL_mixer.Mix_Volume(-1, 128);
+            SDL_mixer.Mix_VolumeMusic(128);
 
             window = SDL.SDL_CreateWindow(GetTitle(1000), SDL.SDL_WINDOWPOS_UNDEFINED, SDL.SDL_WINDOWPOS_UNDEFINED, width, height, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
             if (window == IntPtr.Zero)
@@ -87,12 +92,16 @@ namespace Jong2D
 
         public static void CloseWindow()
         {
-            /*
-              Mix_HaltMusic()
-    Mix_HaltChannel(-1)
-    Mix_CloseAudio()
-    Mix_Quit()
-             */
+            IsOpened = false;
+            if (OnClosed != null)
+            {
+                OnClosed();
+            }
+
+            SDL_mixer.Mix_HaltMusic();
+            SDL_mixer.Mix_HaltChannel(-1);
+            SDL_mixer.Mix_CloseAudio();
+            SDL_mixer.Mix_Quit();
 
             SDL_ttf.TTF_Quit();
             SDL_image.IMG_Quit();

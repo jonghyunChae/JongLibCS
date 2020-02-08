@@ -7,16 +7,12 @@ using Jong2D.Utility;
 
 namespace Jong2D
 {
-    public class Font
+    public class Font : Resource
     {
         private IntPtr font { get; set; }
-        public Font(string name, int size = 20)
+        internal Font(IntPtr font)
         {
-            this.font = SDL_ttf.TTF_OpenFont(name, size);
-            if (this.font == IntPtr.Zero)
-            {
-                throw new Exception($"Font Create Fail - name:{name}, size:{size}");
-            }
+            this.font = font;
         }
 
         public Image CreateImage(string str, Color color)
@@ -43,22 +39,30 @@ namespace Jong2D
                 image.Render(pos);
             }
         }
+
+        public override void Close()
+        {
+            if (this.font != IntPtr.Zero)
+            {
+                SDL_ttf.TTF_CloseFont(this.font);
+                this.font = IntPtr.Zero;
+            }
+        }
     }
 
     public static partial class Context
     {
         public static Font LoadFont(string name, int size = 20)
         {
-            try
+            IntPtr data = SDL_ttf.TTF_OpenFont(name, size);
+            if (data == IntPtr.Zero)
             {
-                var font = new Font(name, size);
-                return font;
+                string msg = $"Error Load Font!! name:{name} size:{size}";
+                Log(msg);
+                throw new Exception(msg);
             }
-            catch (Exception e)
-            {
-                Log(e.ToString());
-                return null;
-            }
+
+            return new Font(data);
         }
     }
 }
