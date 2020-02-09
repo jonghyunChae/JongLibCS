@@ -22,7 +22,7 @@ namespace Jong2DTest
                 Console.WriteLine(e.Type);
                 switch (e.Type)
                 {
-                        // 키보드 처리
+                    // 키보드 처리
                     case SDL.SDL_EventType.SDL_KEYDOWN:
                         {
                             Console.WriteLine(e.Key);
@@ -79,7 +79,10 @@ namespace Jong2DTest
             Resources.Add(music);
 
             // 게임 루프
-            var pos = new Vector2D(100, 80);
+            var pos = new Vector2D(300, 180);
+            var firstPos = pos;
+
+            int angle = 0;
             int frame = 0;
             CloseGame = false;
             while (CloseGame == false)
@@ -87,11 +90,16 @@ namespace Jong2DTest
                 // 이벤트 처리
                 HandleEvents();
 
-                pos.x += 2;
+                angle++;
+
+                int radius = 100;
+                double radian = angle * Math.PI / 180.0;
+                pos.x = (int)(radius * Math.Cos(radian) + firstPos.x);
+                pos.y = (int)(radius * Math.Sin(radian) + firstPos.y);
 
                 Context.ClearWindow();
 
-                font.Render(100, 300, "Sample3", new Color(100, 25, 25));
+                font.Render(100, 300, "Sample4", new Color(100, 25, 25));
                 grass.Render(Program.SCREEN_WIDTH / 2, 30);
                 character.ClipRender(new Rectangle(frame * 100, 0, 100, 100), pos);
 
@@ -99,7 +107,7 @@ namespace Jong2DTest
 
                 Context.UpdateWindow();
 
-                Context.Delay(0.1);
+                Context.Delay(0.01);
             }
 
             Context.CloseWindow();

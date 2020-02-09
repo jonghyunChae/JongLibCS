@@ -8,10 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Jong2DTest</RootNamespace>
     <AssemblyName>Jong2DTest</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -72,8 +73,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sample01.cs" />
+    <None Include="Sample04.cs" />
+    <Compile Include="Sample05\Sample06_Object.cs" />
+    <None Include="Sample04\Sample05_Object.cs" />
+    <Compile Include="Sample05\Sample06.cs" />
+    <None Include="Sample01.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Sample04\Sample05.cs" />
     <None Include="Sample03.cs" />
     <None Include="Sample02.cs" />
   </ItemGroup>
@@ -84,6 +90,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\animation_sheet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\background.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -97,6 +106,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
