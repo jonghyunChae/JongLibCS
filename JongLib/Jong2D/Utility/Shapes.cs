@@ -21,13 +21,13 @@ namespace Jong2D.Utility
     public struct Rectangle
     {
         // 좌측하단 지점
-        public Vector2D pos { get; set; }
-        public int x => pos.x;
-        public int y => pos.y;
+        public Vector2D pos;
+        public int x { get => pos.x; set { pos.x = value; } }
+        public int y { get => pos.y; set { pos.y = value; } }
 
-        public Size2D size { get; set; }
-        public int width => size.width;
-        public int height => size.height;
+        public Size2D size;
+        public int width { get => size.width; set { size.width = value; } }
+        public int height { get => size.height; set { size.height = value; } }
 
         public Rectangle(int x = 0, int y = 0, int width = 0, int height = 0)
         {

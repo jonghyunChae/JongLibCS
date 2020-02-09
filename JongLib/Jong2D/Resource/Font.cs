@@ -9,7 +9,12 @@ namespace Jong2D
 {
     public class Font : Resource
     {
+        private string cacheStr { get; set; }
+        private Color cacheColor { get; set; }
+        private Image image { get; set; }
+
         private IntPtr font { get; set; }
+
         internal Font(IntPtr font)
         {
             this.font = font;
@@ -24,24 +29,46 @@ namespace Jong2D
             return new Image(texture);
         }
 
+        private void CreateImageProxy(string str, Color color)
+        {
+            if (this.image != null)
+            {
+                if (string.IsNullOrEmpty(str))
+                    throw new Exception("font string is null or empty");
+
+                if (this.cacheStr == str 
+                    && this.cacheColor.Equals(color))
+                {
+                    return;
+                }
+
+                this.image.Dispose();
+                this.image = null;
+            }
+
+            this.cacheStr = str;
+            this.cacheColor = color;
+            this.image = this.CreateImage(str, color);
+        }
+
         public void Render(int x, int y, string str, Color color)
         {
-            using (var image = this.CreateImage(str, color))
-            {
-                image.Render(x, y);
-            }
+            this.CreateImageProxy(str, color);
+
+            this.image.Render(x, y);
         }
 
         public void Render(Vector2D pos, string str, Color color)
         {
-            using (var image = this.CreateImage(str, color))
-            {
-                image.Render(pos);
-            }
+            this.CreateImageProxy(str, color);
+
+            this.image.Render(pos);
         }
 
         public override void Close()
         {
+            this.image?.Dispose();
+            this.image = null;
             if (this.font != IntPtr.Zero)
             {
                 SDL_ttf.TTF_CloseFont(this.font);

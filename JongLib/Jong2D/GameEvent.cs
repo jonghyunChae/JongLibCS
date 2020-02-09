@@ -48,10 +48,7 @@ namespace Jong2D
                 case SDL.SDL_EventType.SDL_KEYDOWN:
                 case SDL.SDL_EventType.SDL_KEYUP:
                     {
-                        if (sdl_event.key.repeat == 0)
-                        {
-                            gameEvent.Key = sdl_event.key.keysym.sym;
-                        }
+                        gameEvent.Key = sdl_event.key.keysym.sym;
                     }
                     break;
                 case SDL.SDL_EventType.SDL_MOUSEMOTION:

@@ -8,7 +8,7 @@ using SDL2;
 
 namespace Jong2D.Utility
 {
-    public struct Color
+    public struct Color : IEquatable<Color>
     {
         public byte r { get; set; }
         public byte g { get; set; }
@@ -42,6 +42,15 @@ namespace Jong2D.Utility
                 g = this.g,
                 b = this.b,
             };
+        }
+
+        public bool Equals(Color other)
+        {
+            if (this.r != other.r) return false;
+            if (this.g != other.g) return false;
+            if (this.b != other.b) return false;
+            if (this.a != other.a) return false;
+            return true;
         }
     }
 }
