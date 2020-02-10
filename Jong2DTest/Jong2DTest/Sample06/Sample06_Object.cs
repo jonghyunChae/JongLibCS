@@ -31,12 +31,12 @@ namespace Jong2DTest
 
         public Grass(int x, int y)
         {
-            this.pos = new Vector2D(x, y);
+            pos = new Vector2D(x, y);
         }
 
         public void Render()
         {
-            Grass.image.Render(this.pos.x, this.pos.y);
+            Grass.image.Render(pos.x, pos.y);
         }
 
         public void Update() { }
@@ -50,19 +50,18 @@ namespace Jong2DTest
         public string Content { get; set; }
         public Color Color = new Color();
 
-        public Text(int x, int y, int size = 20)
+        public Text(int x, int y, string content, int size = 20)
         {
             pos = new Vector2D(x, y);
-            this.font = Context.LoadFont(@"Resources\ConsolaMalgun.TTF", size);
-            Program.Resources.Add(this.font);
+            font = Context.LoadFont(@"Resources\ConsolaMalgun.TTF", size);
+            Program.Resources.Add(font);
+
+            Content = content;
         }
 
         public void Render()
         {
-            if (string.IsNullOrEmpty(this.Content) == false)
-            {
-                this.font.Render(pos.x, pos.y, this.Content, this.Color);
-            }
+            font.Render(pos.x, pos.y, Content, Color);
         }
 
         public void Update() { }
@@ -84,18 +83,18 @@ namespace Jong2DTest
 
         public Boy(int x, int y)
         {
-            this.Pos = new Vector2D(x, y);
+            Pos = new Vector2D(x, y);
         }
 
         public void Render()
         {
-            this.imageFrame.x = this.frame * 100;
-            Boy.image.ClipRender(this.imageFrame, this.Pos);
+            imageFrame.x = frame * 100;
+            Boy.image.ClipRender(imageFrame, Pos);
         }
 
         public virtual void Update()
         {
-            this.frame = (this.frame + 1) % 8;
+            frame = (this.frame + 1) % 8;
         }
     }
 
@@ -106,13 +105,13 @@ namespace Jong2DTest
 
         public Character(int x, int y) : base(x, y)
         {
-            this.Pos = new Vector2D(x, y);
+            Pos = new Vector2D(x, y);
         }
 
         public override void Update()
         {
-            this.frame = (this.frame + 1) % 8;
-            this.Pos.x = this.Pos.x + (this.dir * 10);
+            frame = (frame + 1) % 8;
+            Pos.x = Pos.x + (dir * 10);
         }
 
         public void EventHandle(GameEvent e)

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Jong2DTest
 {
-    public class Program
+    class Program
     {
         private const int SCREEN_WIDTH = 800;
         private const int SCREEN_HEIGHT = 480;
@@ -22,23 +22,55 @@ namespace Jong2DTest
                     case SDL.SDL_EventType.SDL_KEYDOWN:
                         {
                             if (e.Key == SDL.SDL_Keycode.SDLK_ESCAPE)
-                            {
                                 CloseGame = true;
-                            }
                         }
                         break;
                     case SDL.SDL_EventType.SDL_QUIT:
-                        {
-                            // 종료 처리
-                            CloseGame = true;
-                        }
+                        CloseGame = true;
                         break;
                     default:
                         break;
                 }
+
+            }
+
+            foreach (GameEvent e in events)
+            {
+                EventHandle(e);
             }
         }
 
+        static void EventHandle(GameEvent e)
+        {
+            foreach (var obj in GameObjects)
+            {
+                if (obj is IControllable)
+                {
+                    var target = obj as IControllable;
+                    target.EventHandle(e);
+                }
+            }
+        }
+
+        static void Render()
+        {
+            Context.ClearWindow();
+            foreach (var obj in GameObjects)
+            {
+                obj.Render();
+            }
+            Context.UpdateWindow();
+        }
+
+        static void Update()
+        {
+            foreach (var obj in GameObjects)
+            {
+                obj.Update();
+            }
+        }
+
+        static List<IGameObject> GameObjects = new List<IGameObject>();
         public static List<IResource> Resources = new List<IResource>();
         static void Main(string[] args)
         {
@@ -51,31 +83,28 @@ namespace Jong2DTest
 
             music.PlayRepeat();
 
-            Text text = new Text(100, 300)
+            GameObjects.Add(new Text(100, 300, "Sample6")
             {
-                Content = "Sample4",
                 Color = new Color(100, 25, 25),
-            };
+            });
+            GameObjects.Add(new Grass(Program.SCREEN_WIDTH / 2, 30));
+            GameObjects.Add(new Character(100, 80));
 
-            Grass grass = new Grass(Program.SCREEN_WIDTH / 2, 30);
-            Character character = new Character(100, 80);
+            var random = new Random();
+            for (int i = 0; i < 10; ++i)
+            {
+                GameObjects.Add(new Boy(random.Next(50, Program.SCREEN_WIDTH - 100), random.Next(150, Program.SCREEN_HEIGHT - 100)));
+            }
 
             // 게임 루프
             CloseGame = false;
             while (CloseGame == false)
             {
-                // 이벤트 처리
                 HandleEvents();
 
-                character.Update();
+                Update();
 
-                Context.ClearWindow();
-
-                grass.Render();
-                character.Render();
-                text.Render();
-
-                Context.UpdateWindow();
+                Render();
 
                 Context.Delay(0.1);
             }

@@ -83,19 +83,12 @@ namespace Jong2DTest
 
             music.PlayRepeat();
 
-            GameObjects.Add(new Text(100, 300)
+            GameObjects.Add(new Text(100, 300, "Sample7")
             {
-                Content = "Sample4",
                 Color = new Color(100, 25, 25),
             });
             GameObjects.Add(new Grass(Program.SCREEN_WIDTH / 2, 30));
-            GameObjects.Add(new Character(100, 80));
-
-            var random = new Random();
-            for (int i = 0; i < 10; ++i)
-            {
-                GameObjects.Add(new Boy(random.Next(50, Program.SCREEN_WIDTH - 100), random.Next(150, Program.SCREEN_HEIGHT - 100)));
-            }
+            GameObjects.Add(new Boy(150, 80));
 
             // 게임 루프
             CloseGame = false;
@@ -107,7 +100,7 @@ namespace Jong2DTest
 
                 Render();
 
-                Context.Delay(0.1);
+                Context.Delay(0.05);
             }
 
             Context.CloseWindow();

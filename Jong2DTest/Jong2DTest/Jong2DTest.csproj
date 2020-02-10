@@ -73,15 +73,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Sample04.cs" />
-    <Compile Include="Sample05\Sample06_Object.cs" />
-    <None Include="Sample04\Sample05_Object.cs" />
-    <Compile Include="Sample05\Sample06.cs" />
-    <None Include="Sample01.cs" />
+    <None Include="Sample07\Sample07.cs" />
+    <None Include="Sample07\Sample07_Object.cs" />
+    <None Include="Sample01-04\Sample04.cs" />
+    <None Include="Sample06\Sample06_Object.cs" />
+    <Compile Include="Sample05\Sample05_Object.cs" />
+    <None Include="Sample06\Sample06.cs" />
+    <None Include="Sample01-04\Sample01.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Sample04\Sample05.cs" />
-    <None Include="Sample03.cs" />
-    <None Include="Sample02.cs" />
+    <Compile Include="Sample05\Sample05.cs" />
+    <None Include="Sample01-04\Sample03.cs" />
+    <None Include="Sample01-04\Sample02.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

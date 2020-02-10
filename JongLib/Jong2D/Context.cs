@@ -173,18 +173,18 @@ namespace Jong2D
         public static void Delay(double sec) => SDL.SDL_Delay((uint)(sec * 1000));
 
         private static int frame { get; set; }
-        private static long lastTick { get; set; }
+        private static DateTime lastTime { get; set; }
         public static void PrintFPS()
         {
-            var now = DateTime.Now.Ticks;
-            var delta = DateTime.Now.Ticks - lastTick;
-            if (delta >= TimeSpan.TicksPerSecond)
+            var now = DateTime.Now;
+            var delta = now - lastTime;
+            if ((now - lastTime).TotalSeconds >= 1)
             {
                 var caption = GetTitle(frame);
                 SDL.SDL_SetWindowTitle(window, caption);
 
                 frame = 0;
-                lastTick = now;
+                lastTime = now;
             }
 
             ++frame;

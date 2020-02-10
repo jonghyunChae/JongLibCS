@@ -27,7 +27,6 @@ namespace Jong2D
         public static List<GameEvent> GetGameEvents()
         {
             Context.PrintFPS();
-            SDL.SDL_Delay(1);
 
             var result = new List<GameEvent>();
             SDL.SDL_Event sdl_event;
