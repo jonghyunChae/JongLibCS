@@ -8,13 +8,18 @@ namespace Jong2D.Utility
 {
     public struct Vector2D
     {
-        public int x { get; set; }
-        public int y { get; set; }
+        public double x { get; set; }
+        public double y { get; set; }
 
-        public Vector2D(int x = 0, int y = 0)
+        public Vector2D(double x = 0, double y = 0)
         {
             this.x = x;
             this.y = y;
+        }
+
+        public override string ToString()
+        {
+            return $"[X:{x}, Y:{y}]";
         }
     }
 
@@ -28,6 +33,12 @@ namespace Jong2D.Utility
             this.width = width;
             this.height = height;
         }
+
+        public override string ToString()
+        {
+            return $"[W:{width}, H:{height}]";
+        }
+
     }
 
 }

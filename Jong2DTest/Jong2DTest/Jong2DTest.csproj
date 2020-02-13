@@ -73,6 +73,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Sample08-2\Sample08-2.cs" />
+    <None Include="Sample08-2\Sample08-2_Object.cs" />
+    <None Include="Sample08\Sample08.cs" />
+    <None Include="Sample08\Sample08_Object.cs" />
     <None Include="Sample07\Sample07.cs" />
     <None Include="Sample07\Sample07_Object.cs" />
     <None Include="Sample01-04\Sample04.cs" />

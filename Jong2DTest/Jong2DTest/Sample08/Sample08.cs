@@ -3,6 +3,7 @@ using Jong2D.Utility;
 using SDL2;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Jong2DTest
 {
@@ -94,7 +95,7 @@ namespace Jong2DTest
 
             music.PlayRepeat();
 
-            GameObjects.Add(new Text(100, 300, "Sample7")
+            GameObjects.Add(new Text(100, 300, "Sample8")
             {
                 Color = new Color(100, 25, 25),
             });
@@ -102,16 +103,24 @@ namespace Jong2DTest
             GameObjects.Add(new Boy(150, 80));
 
             // 게임 루프
+            DateTime current_time = DateTime.Now;
             CloseGame = false;
             while (CloseGame == false)
             {
+                DateTime now = DateTime.Now;
+                double frame_time = (DateTime.Now - current_time).TotalSeconds;
+                double frame_rate = 1.0 / frame_time;
+                Console.WriteLine(frame_rate.ToString("0.00000#") + " fps \t " + frame_time.ToString("0.00000#") + " sec");
+                current_time = now;
+
                 HandleEvents();
 
                 Update();
 
                 Render();
 
-                Context.Delay(0.05);
+
+                Thread.Sleep(10);
             }
 
             Context.CloseWindow();

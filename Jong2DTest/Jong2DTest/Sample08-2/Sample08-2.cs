@@ -3,6 +3,7 @@ using Jong2D.Utility;
 using SDL2;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Jong2DTest
 {
@@ -11,7 +12,7 @@ namespace Jong2DTest
         private const int SCREEN_WIDTH = 800;
         private const int SCREEN_HEIGHT = 480;
         private static bool CloseGame { get; set; }
-        static void HandleEvents()
+        static void HandleEvents(double frame_time)
         {
             var events = Context.GetGameEvents();
             foreach (GameEvent e in events)
@@ -47,18 +48,18 @@ namespace Jong2DTest
 
             foreach (GameEvent e in events)
             {
-                EventHandle(e);
+                EventHandle(e, frame_time);
             }
         }
 
-        static void EventHandle(GameEvent e)
+        static void EventHandle(GameEvent e, double frame_time)
         {
             foreach (var obj in GameObjects)
             {
                 if (obj is IControllable)
                 {
                     var target = obj as IControllable;
-                    target.EventHandle(e);
+                    target.EventHandle(e, frame_time);
                 }
             }
         }
@@ -73,11 +74,11 @@ namespace Jong2DTest
             Context.UpdateWindow();
         }
 
-        static void Update()
+        static void Update(double frame_time)
         {
             foreach (var obj in GameObjects)
             {
-                obj.Update();
+                obj.Update(frame_time);
             }
         }
 
@@ -94,7 +95,7 @@ namespace Jong2DTest
 
             music.PlayRepeat();
 
-            GameObjects.Add(new Text(100, 300, "Sample7")
+            GameObjects.Add(new Text(100, 300, "Sample8-2")
             {
                 Color = new Color(100, 25, 25),
             });
@@ -102,16 +103,24 @@ namespace Jong2DTest
             GameObjects.Add(new Boy(150, 80));
 
             // 게임 루프
+            DateTime current_time = DateTime.Now;
             CloseGame = false;
             while (CloseGame == false)
             {
-                HandleEvents();
+                DateTime now = DateTime.Now;
+                double frame_time = (DateTime.Now - current_time).TotalSeconds;
+                double frame_rate = 1.0 / frame_time;
+                //Console.WriteLine(frame_rate.ToString("0.00000#") + " fps \t " + frame_time.ToString("0.00000#") + " sec");
+                current_time = now;
 
-                Update();
+                // 거리 = 경과시간 * 속도
+                // 위치 = 초기 위치 + 거리
+                // 다음 프레임 = 현재 프레임 + v△t (v: 속도, △t : 시간 차이)
+                HandleEvents(frame_time);
+
+                Update(frame_time);
 
                 Render();
-
-                Context.Delay(0.05);
             }
 
             Context.CloseWindow();

@@ -51,7 +51,7 @@ namespace Jong2D
             this.image = this.CreateImage(str, color);
         }
 
-        public void Render(int x, int y, string str, Color color)
+        public void Render(double x, double y, string str, Color color)
         {
             this.CreateImageProxy(str, color);
 

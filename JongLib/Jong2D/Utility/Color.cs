@@ -52,5 +52,10 @@ namespace Jong2D.Utility
             if (this.a != other.a) return false;
             return true;
         }
+
+        public override string ToString()
+        {
+            return $"[R:{r}, G:{g}, B:{b}, A:{a}]";
+        }
     }
 }

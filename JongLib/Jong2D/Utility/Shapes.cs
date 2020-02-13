@@ -16,14 +16,19 @@ namespace Jong2D.Utility
             this.From = from;
             this.To = to;
         }
+
+        public override string ToString()
+        {
+            return $"[From:{From}, To:{To}]";
+        }
     }
 
     public struct Rectangle
     {
         // 좌측하단 지점
         public Vector2D pos;
-        public int x { get => pos.x; set { pos.x = value; } }
-        public int y { get => pos.y; set { pos.y = value; } }
+        public double x { get => pos.x; set { pos.x = value; } }
+        public double y { get => pos.y; set { pos.y = value; } }
 
         public Size2D size;
         public int width { get => size.width; set { size.width = value; } }
@@ -39,6 +44,11 @@ namespace Jong2D.Utility
         {
             this.pos = pos;
             this.size = size;
+        }
+
+        public override string ToString()
+        {
+            return $"[X:{x}, Y:{y}, W:{width}, H:{height}]";
         }
     }
 }
