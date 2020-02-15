@@ -3,19 +3,47 @@ using Jong2D.Utility;
 using SDL2;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace Jong2DTest
 {
     /* 
-        과제 : state를 멋지게 짜는 방법은 없을까?
-        유한 상태 기계 : FSM(Finite State Machine)을 공부해보자
-        state pattern은 결국 계속 복잡해지면 한계가 드러난다.
-        위와 같은 한계를 해결하기 위해, 나온 다른 방법은 무엇인지 찾아보자
-        그리고 state와 장/단점을 분석해보자
+        과제 :
+        1. ENTER 키 입력을 하면 주인공의 정보를 저장한다.
+        2. SPACE 키 입력을 하면 주인공의 정보를 로드하여 거기부터 시작한다.
+        3. 게임 시작할 때, 로드할 정보가 있으면 로드하고, 아니면 지금처럼 시작한다
     */
 
     class Program
     {
+        // 객체 저장 테스트를 위한 클래스
+        class ForFileData
+        {
+            public Vector2D Pos { get; set; }
+            private int data;
+            // JSON 컨버터에게 힌트를 주는 어트리뷰트
+            [JsonProperty(PropertyName = "PrivateData")]
+            private int data2;
+
+            public void init()
+            {
+                var rand = new Random();
+                Pos = new Vector2D(rand.Next(0, 1000), rand.Next(0, 1000));
+                data = rand.Next(0, 1000);
+                data2 = rand.Next(0, 1000);
+            }
+
+            public override string ToString()
+            {
+                StringBuilder str = new StringBuilder();
+                str.AppendFormat("Pos:{0}\n", Pos.ToString());
+                str.AppendFormat("Data:{0}\n", data.ToString());
+                str.AppendFormat("Data2:{0}\n", data2.ToString());
+                return str.ToString();
+            }
+        }
+
         private const int SCREEN_WIDTH = 800;
         private const int SCREEN_HEIGHT = 480;
         private static bool CloseGame { get; set; }
@@ -33,14 +61,30 @@ namespace Jong2DTest
                                 CloseGame = true;
                             if (e.Key == SDL.SDL_Keycode.SDLK_RETURN)
                             {
-                                // 앤터 입력. 
-                                // 저장해보자
+                                // 앤터 입력. 저장해보자
+                                // 저장하기 위한 샘플 코드 예시
+                                ForFileData data = new ForFileData();
+                                data.init();
+                                string json = JsonConvert.SerializeObject(data);
+                                Console.WriteLine("Save");
+                                Console.WriteLine(json);
+                                Console.WriteLine("ClassData");
+                                Console.WriteLine(data.ToString());
+                                Console.WriteLine();
+                                System.IO.File.WriteAllText("save.txt", json);
                             }
 
                             if (e.Key == SDL.SDL_Keycode.SDLK_SPACE)
                             {
-                                // 스페이스바 입력
-                                // 로드해보자
+                                // 스페이스바 입력. 로드해보자
+                                // 로드하기 위한 샘플 코드 예시
+                                string json = System.IO.File.ReadAllText("save.txt");
+                                ForFileData data = JsonConvert.DeserializeObject<ForFileData>(json);
+                                Console.WriteLine("Load");
+                                Console.WriteLine(json);
+                                Console.WriteLine("ClassData");
+                                Console.WriteLine(data.ToString());
+                                Console.WriteLine();
                             }
                         }
                         break;

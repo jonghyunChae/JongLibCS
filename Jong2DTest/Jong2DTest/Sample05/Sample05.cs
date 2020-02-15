@@ -6,6 +6,12 @@ using System.Collections.Generic;
 
 namespace Jong2DTest
 {
+    /* 
+      과제 : 각 클래스가 Image를 static으로 유지하는 것에 대해 이유를 생각해보자
+      static으로 유지하면 얻는 장/단점을 정리해보자
+      static으로 유지하면 안될 경우는 무엇일까?
+    */
+
     public class Program
     {
         private const int SCREEN_WIDTH = 800;

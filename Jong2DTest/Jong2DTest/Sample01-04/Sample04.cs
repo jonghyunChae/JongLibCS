@@ -8,6 +8,13 @@ using System.Collections.Generic;
 
 namespace Jong2DTest
 {
+    /* 
+        과제 : 
+        1. 원 운동의 반경을 넓혀보고, 중심점 위치도 옮겨보자
+        2. angle * Math.PI / 180.0 -> 이 계산을 해야하는 이유를 찾아보자
+        3. 필요한 값 (각도, 반지름, Vector2D 등)을 넣으면 원운동으로 변환해주는 Vecotr2D를 리턴하는 함수도 만들어보자
+    */
+
     class Program
     {
         //Screen dimension constants

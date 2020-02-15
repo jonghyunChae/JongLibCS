@@ -7,6 +7,12 @@ using System.Threading;
 
 namespace Jong2DTest
 {
+    /* 
+    과제 :
+    1. 왼쪽 끝부터 오른쪽 끝까지 가는데, 10초 걸리도록 설계해보자
+    2. 애니메이션 frame을 모두 수행하는데 걸리는 시간을 다양하게 바꿔보자
+    */
+
     class Program
     {
         private const int SCREEN_WIDTH = 800;
@@ -24,17 +30,6 @@ namespace Jong2DTest
                         {
                             if (e.Key == SDL.SDL_Keycode.SDLK_ESCAPE)
                                 CloseGame = true;
-                            if (e.Key == SDL.SDL_Keycode.SDLK_RETURN)
-                            {
-                                // 앤터 입력. 
-                                // 저장해보자
-                            }
-
-                            if (e.Key == SDL.SDL_Keycode.SDLK_SPACE)
-                            {
-                                // 스페이스바 입력
-                                // 로드해보자
-                            }
                         }
                         break;
                     case SDL.SDL_EventType.SDL_QUIT:

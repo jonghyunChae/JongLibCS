@@ -3,7 +3,6 @@ using Jong2D.Utility;
 
 namespace Jong2DTest
 {
-
     public class Grass
     {
         static Image image;

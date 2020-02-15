@@ -11,12 +11,12 @@ namespace Jong2DTest
     interface IGameObject
     {
         void Render();
-        void Update(double frame_time);
+        void Update();
     }
 
     interface IControllable
     {
-        void EventHandle(GameEvent e, double frame_time);
+        void EventHandle(GameEvent e);
     }
 
     public class Grass : IGameObject
@@ -39,7 +39,7 @@ namespace Jong2DTest
             Grass.image.Render(pos.x, pos.y);
         }
 
-        public void Update(double frame_time) { }
+        public void Update() { }
     }
 
     public class Text : IGameObject
@@ -64,7 +64,7 @@ namespace Jong2DTest
             font.Render(pos.x, pos.y, Content, Color);
         }
 
-        public void Update(double frame_time) { }
+        public void Update() { }
     }
 
     public class Boy : IGameObject
@@ -74,27 +74,15 @@ namespace Jong2DTest
 
         private Rectangle imageFrame = new Rectangle(0, 0, 100, 100);
         int frame { get; set; }
-        double total_frame { get; set; }
-        int dir { get; set; }
-
-        /*
-         * PIXEL_PER_METER = (10.0 / 0.3) # 10 pixel 30 cm 
-         * RUN_SPEED_KMPH = 20.0 # Km / Hour 
-         * RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0) 
-         * RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0) 
-         * RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-         */
-        const double RUN_SPEED_PPS = 100; // 1초에 100을 옮긴다고 가정하자
-
-        const double TIME_PER_ACTION = 2.0; // 액션을 하는데 총 소비할 시간 (초)
-        const double ACTION_PER_TIME = 1.0 / TIME_PER_ACTION;   // 초당 액션 수
-        const int FRAME_PER_ACTION = 8;     // 총 액션 수 (8개 프레임)
-
+        int stand_frame { get; set; }
+        int run_frame { get; set; }
 
         enum STATE
         {
             LEFT_RUN,
             RIGHT_RUN,
+            LEFT_STAND,
+            RIGHT_STAND,
 
             STATE_MAX,
         }
@@ -111,12 +99,13 @@ namespace Jong2DTest
         public Boy(int x, int y)
         {
             Pos = new Vector2D(x, y);
-            state = STATE.RIGHT_RUN;
-            dir = 1;
+            state = STATE.LEFT_STAND;
 
             stateHandlers = new Dictionary<STATE, Action>();
             stateHandlers[STATE.LEFT_RUN] = LeftRun;
             stateHandlers[STATE.RIGHT_RUN] = RightRun;
+            stateHandlers[STATE.LEFT_STAND] = LeftStand;
+            stateHandlers[STATE.RIGHT_STAND] = RightStand;
         }
 
         public void Render()
@@ -124,35 +113,62 @@ namespace Jong2DTest
             imageFrame.x = frame * 100;
             imageFrame.y = ((int)state) * 100;
             Boy.image.ClipRender(this.imageFrame, this.Pos);
+            
         }
 
-        public virtual void Update(double frame_time)
+        public virtual void Update()
         {
-            total_frame += FRAME_PER_ACTION * ACTION_PER_TIME * frame_time;
-            frame = ((int)total_frame) % 8;
-
-            double distance = RUN_SPEED_PPS * frame_time;
-            double x = Pos.x + dir * distance;
-            Pos.x = x;
-            
+            frame = (frame + 1) % 8;
             stateHandlers[state]();
         }
 
         void LeftRun()
         {
-            if (this.Pos.x < 50)
+            Pos.x -= 5;
+            run_frame++;
+            if (this.Pos.x < 10)
             {
                 state = STATE.RIGHT_RUN;
-                dir = 1;
+            }
+            if (run_frame == 100)
+            {
+                state = STATE.LEFT_STAND;
+                stand_frame = 0;
             }
         }
 
         void RightRun()
         {
-            if (Pos.x > 750)
+            Pos.x += 5;
+            run_frame++;
+            if (Pos.x > 800)
             {
                 state = STATE.LEFT_RUN;
-                dir = -1;
+            }
+            if (run_frame == 100)
+            {
+                state = STATE.RIGHT_STAND;
+                stand_frame = 0;
+            }
+        }
+
+        void LeftStand()
+        {
+            stand_frame++;
+            if (stand_frame == 50)
+            {
+                state = STATE.LEFT_RUN;
+                run_frame = 0;
+            }
+        }
+
+        void RightStand()
+        {
+            stand_frame++;
+            if (stand_frame == 50)
+            {
+                state = STATE.RIGHT_RUN;
+                run_frame = 0;
             }
         }
     }

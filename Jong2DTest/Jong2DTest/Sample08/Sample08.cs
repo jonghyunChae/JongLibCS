@@ -24,17 +24,6 @@ namespace Jong2DTest
                         {
                             if (e.Key == SDL.SDL_Keycode.SDLK_ESCAPE)
                                 CloseGame = true;
-                            if (e.Key == SDL.SDL_Keycode.SDLK_RETURN)
-                            {
-                                // 앤터 입력. 
-                                // 저장해보자
-                            }
-
-                            if (e.Key == SDL.SDL_Keycode.SDLK_SPACE)
-                            {
-                                // 스페이스바 입력
-                                // 로드해보자
-                            }
                         }
                         break;
                     case SDL.SDL_EventType.SDL_QUIT:
@@ -118,7 +107,6 @@ namespace Jong2DTest
                 Update();
 
                 Render();
-
 
                 Thread.Sleep(10);
             }

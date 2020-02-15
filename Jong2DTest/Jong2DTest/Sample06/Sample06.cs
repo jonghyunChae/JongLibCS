@@ -6,6 +6,15 @@ using System.Collections.Generic;
 
 namespace Jong2DTest
 {
+    /* 
+    과제 :
+    1. 특정 키입력을 하면, 점프를 넣어보자
+    2. 캐릭터 말고, 다른 Boy들은 랜덤으로 스스로 움직이게 해보자
+    3. 다음과 같은 내용에 대해 생각해보자
+    - 상속 구조를 사용하면 장/단점이 무엇일까?
+    - GameObjects에 모든 객체에 담으면 장/단점이 무엇일까? 
+    */
+
     class Program
     {
         private const int SCREEN_WIDTH = 800;

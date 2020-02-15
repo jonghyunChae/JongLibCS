@@ -94,7 +94,7 @@ namespace Jong2DTest
 
         public virtual void Update()
         {
-            frame = (this.frame + 1) % 8;
+            frame = (frame + 1) % 8;
         }
     }
 
