@@ -11,8 +11,10 @@ namespace Jong2DTest
     /* 
         과제 : 
         1. 원 운동의 반경을 넓혀보고, 중심점 위치도 옮겨보자
-        2. angle * Math.PI / 180.0 -> 이 계산을 해야하는 이유를 찾아보자
-        3. 필요한 값 (각도, 반지름, Vector2D 등)을 넣으면 원운동으로 변환해주는 Vecotr2D를 리턴하는 함수도 만들어보자
+        2. Math.PI / 180.0 -> 이 값을 곱하는 이유를 찾아보자
+        3. 이번엔 반대로 firstPos 기준으로 pos 값의 각도를 구해보자
+           즉, firstPos와 pos 두 개의 좌표값으로 degree를 역으로 구해보자.
+           (힌트 : atan2)
     */
 
     class Program
@@ -89,7 +91,7 @@ namespace Jong2DTest
             var pos = new Vector2D(300, 180);
             var firstPos = pos;
 
-            int angle = 0;
+            int degree = 0;
             int frame = 0;
             CloseGame = false;
             while (CloseGame == false)
@@ -97,10 +99,10 @@ namespace Jong2DTest
                 // 이벤트 처리
                 HandleEvents();
 
-                angle++;
+                degree++;
 
                 int radius = 100;
-                double radian = angle * Math.PI / 180.0;
+                double radian = degree * Math.PI / 180.0;
                 pos.x = (int)(radius * Math.Cos(radian) + firstPos.x);
                 pos.y = (int)(radius * Math.Sin(radian) + firstPos.y);
 
