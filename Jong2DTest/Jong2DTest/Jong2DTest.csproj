@@ -76,10 +76,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Sample09-2\Sample09-2.cs" />
-    <None Include="Sample09-2\Sample09-2_Object.cs" />
-    <None Include="Sample09\Sample09_answer\Sample09_a_Object.cs" />
-    <None Include="Sample09\Sample09_answer\Sample09_a.cs" />
+    <None Include="Sample09\Sample09-2\Sample09-2.cs" />
+    <None Include="Sample09\Sample09-2\Sample09-2_Object.cs" />
+    <None Include="Sample09\Sample09-1\Sample09-1_Object.cs" />
+    <None Include="Sample09\Sample09-1\Sample09-1.cs" />
     <Compile Include="Sample09\Sample09.cs" />
     <Compile Include="Sample09\Sample09_Object.cs" />
     <None Include="Sample07-2\Sample07-2_Object.cs" />
