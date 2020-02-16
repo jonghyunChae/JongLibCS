@@ -8,6 +8,12 @@ using System.Threading;
 
 namespace Jong2DTest
 {
+    /* 
+    과제 : 
+    1. 샘플코드 보다 충돌체크의 효율을 높이기 위해 더 좋은 방법을 생각해보고 적용해보자!
+       - 충돌체크 횟수를 줄일 수 있는 방법은 없을까?
+    */
+
     class Program
     {
         private const int SCREEN_WIDTH = 800;
