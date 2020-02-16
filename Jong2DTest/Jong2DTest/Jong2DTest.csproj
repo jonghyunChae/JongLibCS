@@ -76,6 +76,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Sample09-2\Sample09-2.cs" />
+    <None Include="Sample09-2\Sample09-2_Object.cs" />
+    <None Include="Sample09\Sample09_answer\Sample09_a_Object.cs" />
+    <None Include="Sample09\Sample09_answer\Sample09_a.cs" />
+    <Compile Include="Sample09\Sample09.cs" />
+    <Compile Include="Sample09\Sample09_Object.cs" />
     <None Include="Sample07-2\Sample07-2_Object.cs" />
     <None Include="Sample07-2\Sample07-2.cs" />
     <None Include="packages.config" />
@@ -85,7 +91,7 @@
     <None Include="Sample08\Sample08_Object.cs" />
     <None Include="Sample07\Sample07.cs" />
     <None Include="Sample07\Sample07_Object.cs" />
-    <Compile Include="Sample01-04\Sample04.cs" />
+    <None Include="Sample01-04\Sample04.cs" />
     <None Include="Sample06\Sample06_Object.cs" />
     <None Include="Sample05\Sample05_Object.cs" />
     <None Include="Sample06\Sample06.cs" />
@@ -106,6 +112,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\background.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ball21x21.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ball41x41.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\character.png">

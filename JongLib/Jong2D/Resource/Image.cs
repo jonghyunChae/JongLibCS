@@ -132,16 +132,6 @@ namespace Jong2D
 
     public static partial class Context
     {
-        //internal static SDL.SDL_Rect ToSDLRect(ref Jong2D.Utility.Rectangle rect)
-        //{
-        //    var sdl_rect = new SDL.SDL_Rect();
-        //    sdl_rect.x = rect.x;
-        //    sdl_rect.y = Context.screen_height - rect.y - rect.height;
-        //    sdl_rect.w = width;
-        //    sdl_rect.h = height;
-        //    return sdl_rect;
-        //}
-
         internal static SDL.SDL_FRect ToSDLRect(double x, double y, int width, int height)
         {
             var sdl_rect = new SDL.SDL_FRect();
@@ -163,6 +153,18 @@ namespace Jong2D
             }
 
             return new Image(texture);
+        }
+
+        public static void Draw(Utility.Rectangle rect, Utility.Color color)
+        {
+            SDL.SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+            var sdl_rect = new SDL.SDL_FRect();
+            sdl_rect.x = (float)rect.x;
+            sdl_rect.y = (float)(Context.screen_height - rect.y - rect.height);
+            sdl_rect.w = rect.width;
+            sdl_rect.h = rect.height;
+
+            SDL.SDL_RenderDrawRectF(renderer, ref sdl_rect);
         }
     }
 }
