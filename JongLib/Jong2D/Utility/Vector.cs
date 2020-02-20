@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Jong2D.Utility
 {
+
     public struct Vector2D
     {
         public double x { get; set; }
@@ -15,6 +16,46 @@ namespace Jong2D.Utility
         {
             this.x = x;
             this.y = y;
+        }
+
+        public static Vector2D operator*(Vector2D src, double n)
+        {
+            return new Vector2D(src.x * n, src.y * n);
+        }
+
+        public static Vector2D operator /(Vector2D src, double n)
+        {
+            return new Vector2D(src.x / n, src.y / n);
+        }
+
+        public static Vector2D operator +(Vector2D src, Vector2D dest)
+        {
+            return new Vector2D(src.x + dest.x, src.y + dest.y);
+        }
+
+        public static Vector2D operator -(Vector2D src, Vector2D dest)
+        {
+            return new Vector2D(src.x - dest.x, src.y - dest.y);
+        }
+
+        public double LengthSquare()
+        {
+            return x * x + y * y;
+        }
+
+        public double Length()
+        {
+            return Math.Sqrt(LengthSquare());
+        }
+
+        public Vector2D Normalize()
+        {
+            var lengthSqr = LengthSquare();
+            if (lengthSqr == 0)
+            {
+                return this;
+            }
+            return this / Length();
         }
 
         public override string ToString()

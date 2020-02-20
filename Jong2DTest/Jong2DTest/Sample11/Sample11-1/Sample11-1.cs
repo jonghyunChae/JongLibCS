@@ -8,16 +8,10 @@ using System.Threading;
 
 namespace Jong2DTest
 {
-    /* 
-    과제 : 
-    1. 샘플코드 보다 충돌체크의 효율을 높이기 위해 더 좋은 방법을 생각해보고 적용해보자!
-       - 충돌체크 횟수를 줄일 수 있는 방법은 없을까?
-    */
-
     class Program
     {
-        private const int SCREEN_WIDTH = 800;
-        private const int SCREEN_HEIGHT = 480;
+        public const int SCREEN_WIDTH = 800;
+        public const int SCREEN_HEIGHT = 480;
         private static bool CloseGame { get; set; }
         static void HandleEvents(double frame_time)
         {
@@ -39,7 +33,6 @@ namespace Jong2DTest
                     default:
                         break;
                 }
-
             }
 
             foreach (GameEvent e in events)
@@ -72,30 +65,10 @@ namespace Jong2DTest
             {
                 obj.Update(frame_time);
             }
-
-            var collidables = GameObjects
-                .Where(x => x is ICollidable)
-                .Select(x => x as ICollidable)
-                .ToList();
-
-            foreach (var src in collidables)
-            {
-                foreach (var target in collidables)
-                {
-                    Collision.AABBCollision(src, target);
-                }
-            }
-
-            foreach (var remove in RemoveList)
-            {
-                GameObjects.Remove(remove);
-            }
-            RemoveList.Clear();
         }
 
         static List<IGameObject> GameObjects = new List<IGameObject>();
         public static List<IResource> Resources = new List<IResource>();
-        public static List<IGameObject> RemoveList = new List<IGameObject>();
         static void Main(string[] args)
         {
             Context.CreateWindow(Program.SCREEN_WIDTH, Program.SCREEN_HEIGHT);
@@ -107,18 +80,14 @@ namespace Jong2DTest
 
             music.PlayRepeat();
 
-            GameObjects.Add(new Text(100, 300, "Sample9-1")
+            // 배경은 항상 먼저 그려야한다. 
+            GameObjects.Add(BackGround.Instance);
+            GameObjects.Add(new Text(100, 300, "Sample11-1")
             {
                 Color = new Color(100, 25, 25),
             });
             GameObjects.Add(new Grass(Program.SCREEN_WIDTH / 2, 30));
-            GameObjects.Add(new Boy(20, 80));
-
-            Random r = new Random();
-            foreach(var i in Enumerable.Range(0, 30))
-            {
-                GameObjects.Add(new Ball(r.Next(50, 750), 100));
-            }
+            GameObjects.Add(new Boy(BackGround.WorldWidth/ 2, 80));
 
             // 게임 루프
             DateTime current_time = DateTime.Now;
