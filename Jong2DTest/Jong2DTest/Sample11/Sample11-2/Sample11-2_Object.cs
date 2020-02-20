@@ -54,41 +54,26 @@ namespace Jong2DTest
 
     public class Camera
     {
-        double debug_x;
+        Vector2D debug_pos;
         public Vector2D Pos;
         public void SetCamera(ref Vector2D pos)
         {
-            Pos.x = (int)pos.x % BackGround.WorldWidth;
-            if (Pos.x < 0)
-            {
-                int n = (int)(-Pos.x / BackGround.WorldWidth) + 1;
-                Pos.x += n * BackGround.WorldWidth;
-
-                // 결국 이 의미
-                //while (Pos.x < 0)
-                //{
-                //    Pos.x += BackGround.WorldWidth;
-                //}
-            }
-
-            Pos.y = (int)pos.y % BackGround.WorldHeight;
-            if (Pos.y < 0)
-            {
-                int n = (int)(-Pos.y / BackGround.WorldHeight) + 1;
-                Pos.y += n * BackGround.WorldHeight;
-            }
-
-            if (debug_x != Pos.x)
+            int width_half = Program.SCREEN_WIDTH / 2;
+            Pos.x = JongMath.Clamp(0, pos.x - width_half, BackGround.WorldWidth - Program.SCREEN_WIDTH);
+            Pos.y = JongMath.Clamp(0, pos.y - Program.SCREEN_HEIGHT / 2, BackGround.WorldHeight - Program.SCREEN_HEIGHT / 2);
+            if (debug_pos.x != Pos.x || debug_pos.y != Pos.y)
             {
                 Console.WriteLine(Pos + " / " + pos);
-                debug_x = Pos.x;
+                debug_pos = Pos;
             }
         }
 
         // 스크린 좌표로 변환해줍니다.
         public Vector2D ToScreenPos(ref Vector2D pos)
         {
-            return new Vector2D(Program.SCREEN_WIDTH / 2, pos.y);
+            double x = JongMath.Clamp(0, pos.x, BackGround.WorldWidth);
+            double y = JongMath.Clamp(0, pos.y, BackGround.WorldHeight);
+            return new Vector2D(x, y);
         }
     }
 
@@ -99,7 +84,7 @@ namespace Jong2DTest
 
         static Image image;
         public Camera Camera = new Camera();
-
+        Rectangle rect = new Rectangle(0, 0, Program.SCREEN_WIDTH, Program.SCREEN_HEIGHT);
         static BackGround()
         {
             BackGround.image = Context.LoadImage(@"Resources\scroll_background.png");
@@ -126,12 +111,8 @@ namespace Jong2DTest
 
         public void Render()
         {
-            int x = (int)Camera.Pos.x;
-            int w = (int)Math.Min(WorldWidth - x, Program.SCREEN_WIDTH);
-            var r1 = new Rectangle(x, 0, w, Program.SCREEN_HEIGHT);
-            BackGround.image.ClipRenderToOrigin(r1, 0, 0);
-            var r2 = new Rectangle(0, 0, Program.SCREEN_WIDTH - w, Program.SCREEN_HEIGHT);
-            BackGround.image.ClipRenderToOrigin(r2, w, 0);
+            rect.pos = Camera.Pos;
+            BackGround.image.ClipRenderToOrigin(rect, 0, 0);
             //Console.WriteLine($"r1 : {r1} /  r2 : {r2} / w : {w}");
         }
 
@@ -262,7 +243,11 @@ namespace Jong2DTest
         {
             double distance = RUN_SPEED_PPS * frame_time;
             double x = Pos.x + dir * distance;
-            Pos.x = x;
+            //Pos.x = JongMath.Clamp(50, x, BackGround.WorldWidth - 50);
+            x = JongMath.Clamp(0, x, BackGround.WorldWidth);
+            double y = JongMath.Clamp(0, Pos.y, BackGround.WorldHeight);
+
+            //Console.WriteLine(">>"+Pos.x);
         }
 
         void LeftRun()
