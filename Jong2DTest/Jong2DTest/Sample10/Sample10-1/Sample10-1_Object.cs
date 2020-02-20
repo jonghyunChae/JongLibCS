@@ -8,107 +8,48 @@ using System.Collections.Generic;
 
 namespace Jong2DTest
 {
-     interface IGameObject
+    public class BoundingBox
+    {
+        public Vector2D MinPoint { get; set; }
+        public Vector2D MaxPoint { get; set; }
+
+        public bool Collide(BoundingBox bb)
+        {
+            if (this.MinPoint.x > bb.MaxPoint.x) return false;
+            if (this.MaxPoint.x < bb.MinPoint.x) return false;
+            if (this.MinPoint.y > bb.MaxPoint.y) return false;
+            if (this.MaxPoint.y < bb.MinPoint.y) return false;
+
+            return true;
+        }
+
+        public static BoundingBox Create(Vector2D Pos, Size2D size)
+        {
+            int w = size.width / 2;
+            int h = size.height / 2;
+            return new BoundingBox()
+            {
+                MinPoint = new Vector2D(Pos.x - w, Pos.y - h),
+                MaxPoint = new Vector2D(Pos.x + w, Pos.y + h),
+            };
+        }
+
+        public Rectangle ToRectangle()
+        {
+            return new Rectangle(MinPoint, new Size2D((int)(MaxPoint.x - MinPoint.x), (int)(MaxPoint.y - MinPoint.y)));
+        }
+    }
+
+    interface IGameObject
     {
         void Render();
         void Update(double frame_time);
         void EventHandle(GameEvent e, double frame_time);
     }
 
-    public class Camera
+    public interface ICollidable
     {
-        Vector2D debug_pos = new Vector2D(0, 0);
-        public Vector2D Pos;
-        public void SetCamera(ref Vector2D pos)
-        {
-            // 그림을 그리기 위해서 좌표값을 계속 순환시켜야 합니다 (overflow, underflow에 대한 처리)
-            Pos.x = (int)pos.x % BackGround.Width;
-            if (Pos.x < 0)
-            {
-                int n = (int)(-Pos.x / BackGround.Width) + 1;
-                Pos.x += n * BackGround.Width;
-
-                // 결국 이 의미
-                //while (Pos.x < 0)
-                //{
-                //    Pos.x += BackGround.WorldWidth;
-                //}
-            }
-
-            Pos.y = (int)pos.y % BackGround.Height;
-            if (Pos.y < 0)
-            {
-                int n = (int)(-Pos.y / BackGround.Height) + 1;
-                Pos.y += n * BackGround.Height;
-            }
-
-            if (debug_pos.x != Pos.x || debug_pos.y != Pos.y)
-            {
-                Console.WriteLine(Pos + " / " + pos);
-                debug_pos = Pos;
-            }
-        }
-
-        // 스크린 좌표로 변환해줍니다.
-        public Vector2D ToScreenPos(ref Vector2D pos)
-        {
-            return new Vector2D(Program.SCREEN_WIDTH / 2, pos.y);
-        }
-    }
-
-    public class BackGround : IGameObject
-    {
-        public static int Width => BackGround.image.width;
-        public static int Height => BackGround.image.height;
-
-        static Image image;
-        public Camera Camera = new Camera();
-
-        static BackGround()
-        {
-            BackGround.image = Context.LoadImage(@"Resources\scroll_background.png");
-            Program.Resources.Add(BackGround.image);
-        }
-
-        private static BackGround instance;
-        public static BackGround Instance
-        {
-            get
-            {
-                if (BackGround.instance == null)
-                {
-                    BackGround.instance = new BackGround();
-                }
-                return BackGround.instance;
-            }
-        }
-
-        private BackGround()
-        {
-            Camera.Pos = new Vector2D(Width / 2, Height / 2);
-        }
-
-        public void Render()
-        {
-            int x = (int)Camera.Pos.x;
-            int w = (int)Math.Min(Width - x, Program.SCREEN_WIDTH);
-
-            // 가장 좌측에 그릴 이미지 하나를 고릅니다.
-            // 1. 화면 전체 크기보다 우측에 이미지가 더 길 경우 -> 화면 전체 크기의 이미지를 하나 그림
-            // 2. 우측에 이미지가 얼마 안남았을 경우 -> 남은 이미지만 먼저 왼쪽에 그림
-            var r1 = new Rectangle(x, 0, w, Program.SCREEN_HEIGHT);
-            BackGround.image.ClipRenderToOrigin(r1, 0, 0);
-
-            // r1을 그리고 남은 것을 실제 이미지의 왼쪽에서 잘라와서 우측에 이어서 붙여넣습니다.
-            // 1. r1의 크기가 스크린 전체 크기라면 -> 결국 길이가 0이라서 안그려줍니다
-            // 2. 1번이 아니라면 남은 크기만큼 왼쪽 0,0부터 가져와서 그립니다.
-            var r2 = new Rectangle(0, 0, Program.SCREEN_WIDTH - w, Program.SCREEN_HEIGHT);
-            BackGround.image.ClipRenderToOrigin(r2, w, 0);
-            //Console.WriteLine($"r1 : {r1} /  r2 : {r2} / w : {w}");
-        }
-
-        public void Update(double frame_time) { }
-        public void EventHandle(GameEvent e, double frame_time) { }
+        BoundingBox GetBB();
     }
 
     public class Grass : IGameObject
@@ -161,10 +102,10 @@ namespace Jong2DTest
         public void EventHandle(GameEvent e, double frame_time) {}
     }
 
-    public class Boy : IGameObject
+    public class Boy : IGameObject, ICollidable
     {
         static Image image;
-        public Vector2D Pos;                    // 가상 세계의 위치
+        public Vector2D Pos = new Vector2D();
 
         private Rectangle imageFrame = new Rectangle(0, 0, 100, 100);
         int frame { get; set; }
@@ -176,6 +117,7 @@ namespace Jong2DTest
         const double TIME_PER_ACTION = 2.0; // 액션을 하는데 총 소비할 시간 (초)
         const double ACTION_PER_TIME = 1.0 / TIME_PER_ACTION;   // 초당 액션 수
         const int FRAME_PER_ACTION = 8;     // 총 액션 수 (8개 프레임)
+
 
         enum STATE
         {
@@ -209,30 +151,21 @@ namespace Jong2DTest
         {
             imageFrame.x = frame * 100;
             imageFrame.y = ((int)state) * 100;
-            Vector2D screenPos = BackGround.Instance.Camera.ToScreenPos(ref this.Pos);
-            Boy.image.ClipRender(this.imageFrame, screenPos);
+            Boy.image.ClipRender(this.imageFrame, this.Pos);
+
+            Context.Draw(GetBB().ToRectangle(), new Color(255, 0, 0));
         }
 
         public virtual void Update(double frame_time)
         {
-            updateFrame(frame_time);
-            updatePos(frame_time);
-            stateHandlers[state]();
-
-            BackGround.Instance.Camera.SetCamera(ref Pos);
-        }
-
-        void updateFrame(double frame_time)
-        {
             total_frame += FRAME_PER_ACTION * ACTION_PER_TIME * frame_time;
             frame = ((int)total_frame) % 8;
-        }
 
-        void updatePos(double frame_time)
-        {
             double distance = RUN_SPEED_PPS * frame_time;
             double x = Pos.x + dir * distance;
             Pos.x = x;
+
+            stateHandlers[state]();
         }
 
         void LeftRun()
@@ -241,6 +174,11 @@ namespace Jong2DTest
 
         void RightRun()
         {
+        }
+
+        public BoundingBox GetBB()
+        {
+            return BoundingBox.Create(this.Pos, new Size2D(60, 80));
         }
 
         public void EventHandle(GameEvent e, double frame_time)
@@ -270,8 +208,84 @@ namespace Jong2DTest
                         }
                     }
                     break;
+                case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
+                    {
+                        // 좌표계를 뒤집어 줍니다.
+                        Vector2D mousePos = new Vector2D(e.x, (Program.SCREEN_HEIGHT - e.y));
+                        Console.WriteLine(mousePos);
+
+                        // 목표 위치 - 내 위치를하여 벡터 기준을 원점으로 되돌립니다.
+                        Vector2D dirVector = mousePos - Pos;
+                        Ball ball = new Ball(Pos, dirVector); // 내부에서 노말라이즈를 합니다.
+
+                        Program.AddObject(ball);
+                    }
+                    break;
+
                 default:
                     break;
+            }
+        }
+    }
+
+    public class Ball : IGameObject, ICollidable
+    {
+        static Image image;
+        Vector2D pos = new Vector2D();
+        Vector2D dir;
+        double g_power = 20 * 20;
+        double accel = 0;
+        const int move_speed = 200;      // 초당 속도
+        double life_time = 1.5;     // 생명 시간
+        static Size2D Size = new Size2D(22, 22);
+
+        static Ball()
+        {
+            Ball.image = Context.LoadImage(@"Resources\ball21x21.png");
+            Program.Resources.Add(Ball.image);
+        }
+
+        public Ball(Vector2D pos, Vector2D dir)
+        {
+            this.pos = pos;
+            this.dir = dir.Normalize(); // 방향벡터는 정규화 상태를 유지 해야합니다.
+        }
+
+        public void EventHandle(GameEvent e, double frame_time)
+        {
+        }
+
+        public BoundingBox GetBB()
+        {
+            return BoundingBox.Create(pos, Size);
+        }
+
+        public void Render()
+        {
+            Ball.image.Render(pos);
+            Context.Draw(GetBB().ToRectangle(), new Color(255, 0, 0));
+        }
+
+        public void Update(double frame_time)
+        {
+            // 값을 누적시켜 힘을 가중시킵니다.
+            accel += frame_time;
+            Vector2D velocity = dir * move_speed * frame_time;
+            // 음의 방향으로 힘을 주는 벡터를 만듭니다.
+            Vector2D gravity = new Vector2D(0, -1) * g_power * accel * frame_time;
+            // 속도를 변화 시킵니다.
+            velocity += gravity;
+            // 위치에 적용 시킵니다.
+            pos += velocity;
+
+            // 이런식으로 필요하면 방향벡터도 바꿀 수 있습니다
+            //dir = velocity.Normalize();
+            Console.WriteLine(velocity);
+
+            life_time -= frame_time;
+            if (life_time < 0)
+            {
+                Program.RemoveObject(this);
             }
         }
     }

@@ -8,38 +8,6 @@ using System.Collections.Generic;
 
 namespace Jong2DTest
 {
-    public class BoundingBox
-    {
-        public Vector2D MinPoint { get; set; }
-        public Vector2D MaxPoint { get; set; }
-
-        public bool Collide(BoundingBox bb)
-        {
-            if (this.MinPoint.x > bb.MaxPoint.x) return false;
-            if (this.MaxPoint.x < bb.MinPoint.x) return false;
-            if (this.MinPoint.y > bb.MaxPoint.y) return false;
-            if (this.MaxPoint.y < bb.MinPoint.y) return false;
-
-            return true;
-        }
-
-        public static BoundingBox Create(Vector2D Pos, Size2D size)
-        {
-            int w = size.width / 2;
-            int h = size.height / 2;
-            return new BoundingBox()
-            {
-                MinPoint = new Vector2D(Pos.x - w, Pos.y - h),
-                MaxPoint = new Vector2D(Pos.x + w, Pos.y + h),
-            };
-        }
-
-        public Rectangle ToRectangle()
-        {
-            return new Rectangle(MinPoint, new Size2D((int)(MaxPoint.x - MinPoint.x), (int)(MaxPoint.y - MinPoint.y)));
-        }
-    }
-
     interface IGameObject
     {
         void Render();
@@ -47,17 +15,12 @@ namespace Jong2DTest
         void EventHandle(GameEvent e, double frame_time);
     }
 
-    public interface ICollidable
-    {
-        BoundingBox GetBB();
-    }
-
     public class Camera
     {
         public Vector2D Pos;
         public void SetCamera(ref Vector2D pos)
         {
-            this.Pos.x = BackGround.WorldWidth - pos.x;
+            this.Pos.x = BackGround.Width - pos.x;
         }
 
         // 스크린 좌표로 변환해줍니다.
@@ -69,8 +32,8 @@ namespace Jong2DTest
 
     public class BackGround : IGameObject
     {
-        public static int WorldWidth => BackGround.image.width;
-        public static int WorldHeight => BackGround.image.height;
+        public static int Width => BackGround.image.width;
+        public static int Height => BackGround.image.height;
 
         static Image image;
         public Camera Camera = new Camera();
@@ -96,7 +59,7 @@ namespace Jong2DTest
 
         private BackGround()
         {
-            Camera.Pos = new Vector2D(WorldWidth / 2, WorldHeight / 2);
+            Camera.Pos = new Vector2D(Width / 2, Height / 2);
         }
 
         public void Render()
@@ -158,11 +121,10 @@ namespace Jong2DTest
         public void EventHandle(GameEvent e, double frame_time) {}
     }
 
-    public class Boy : IGameObject, ICollidable
+    public class Boy : IGameObject
     {
         static Image image;
         public Vector2D Pos;                    // 가상 세계의 위치
-        Camera camera;                          // 주인공에게 카메라가 붙어있으므로
 
         private Rectangle imageFrame = new Rectangle(0, 0, 100, 100);
         int frame { get; set; }
@@ -194,8 +156,6 @@ namespace Jong2DTest
 
         public Boy(int x, int y)
         {
-            camera = BackGround.Instance.Camera;
-            // 가운데에 고정
             Pos = new Vector2D(x, y);
             state = STATE.RIGHT_RUN;
             dir = 0;
@@ -209,7 +169,7 @@ namespace Jong2DTest
         {
             imageFrame.x = frame * 100;
             imageFrame.y = ((int)state) * 100;
-            Vector2D screenPos = camera.ToScreenPos(ref this.Pos);
+            Vector2D screenPos = BackGround.Instance.Camera.ToScreenPos(ref this.Pos);
             Boy.image.ClipRender(this.imageFrame, screenPos);
         }
 
@@ -219,7 +179,7 @@ namespace Jong2DTest
             updatePos(frame_time);
             stateHandlers[state]();
 
-            camera.SetCamera(ref Pos);
+            BackGround.Instance.Camera.SetCamera(ref Pos);
         }
 
         void updateFrame(double frame_time)
@@ -241,11 +201,6 @@ namespace Jong2DTest
 
         void RightRun()
         {
-        }
-
-        public BoundingBox GetBB()
-        {
-            return BoundingBox.Create(Pos, new Size2D(60, 80));
         }
 
         public void EventHandle(GameEvent e, double frame_time)

@@ -76,20 +76,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sample11\Sample11-2\Sample11-2.cs" />
-    <Compile Include="Sample11\Sample11-2\Sample11-2_Object.cs" />
+    <None Include="Sample11\Sample11-2\Sample11-2.cs" />
+    <None Include="Sample11\Sample11-2\Sample11-2_Object.cs" />
     <None Include="Sample10\Sample10.cs" />
     <None Include="Sample10\Sample10_Object.cs" />
     <None Include="Sample11\Sample11-1\Sample11-1.cs" />
     <None Include="Sample11\Sample11-1\Sample11-1_Object.cs" />
+    <None Include="Sample10\Sample10-1\Sample10-1.cs" />
+    <None Include="Sample10\Sample10-1\Sample10-1_Object.cs" />
     <None Include="Sample11\Sample11_Object.cs" />
     <None Include="Sample11\Sample11.cs" />
     <None Include="Sample09\Sample09-2\Sample09-2.cs" />
     <None Include="Sample09\Sample09-2\Sample09-2_Object.cs" />
     <None Include="Sample09\Sample09-1\Sample09-1_Object.cs" />
     <None Include="Sample09\Sample09-1\Sample09-1.cs" />
-    <None Include="Sample09\Sample09.cs" />
-    <None Include="Sample09\Sample09_Object.cs" />
+    <Compile Include="Sample09\Sample09.cs" />
+    <Compile Include="Sample09\Sample09_Object.cs" />
     <None Include="Sample07-2\Sample07-2_Object.cs" />
     <None Include="Sample07-2\Sample07-2.cs" />
     <None Include="packages.config" />

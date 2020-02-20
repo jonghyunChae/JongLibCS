@@ -267,9 +267,9 @@ namespace Jong2DTest
         public void Update(double frame_time)
         {
             // 이동할 거리 = 방향 벡터 * 속도 * 시간
-            Vector2D moveVector = dir * move_speed * frame_time;
+            Vector2D velocity = dir * move_speed * frame_time;
             // 내 위치 = 내 위치 + 이동할 거리
-            pos = pos + moveVector;
+            pos = pos + velocity;
 
             life_time -= frame_time;
             if (life_time < 0)

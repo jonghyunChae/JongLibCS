@@ -87,7 +87,7 @@ namespace Jong2DTest
                 Color = new Color(100, 25, 25),
             });
             GameObjects.Add(new Grass(Program.SCREEN_WIDTH / 2, 30));
-            GameObjects.Add(new Boy(BackGround.WorldWidth/ 2, 80));
+            GameObjects.Add(new Boy(BackGround.Width/ 2, 80));
 
             // 게임 루프
             DateTime current_time = DateTime.Now;
@@ -95,7 +95,12 @@ namespace Jong2DTest
             while (CloseGame == false)
             {
                 DateTime now = DateTime.Now;
-                double frame_time = (DateTime.Now - current_time).TotalSeconds;
+                if (now == current_time)
+                {
+                    continue;
+                }
+
+                double frame_time = (now - current_time).TotalSeconds;
                 current_time = now;
 
                 HandleEvents(frame_time);
