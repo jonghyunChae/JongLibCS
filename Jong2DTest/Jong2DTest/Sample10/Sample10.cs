@@ -18,7 +18,7 @@ namespace Jong2DTest
            수학 공식을 떠올리면서 Length 대신에 Square를 통해서 길이 비교를 해보자.
         3. 캐릭터의 이동도 방향벡터를 이용해서 구현해보자
         
-        심화 과제 넣을까 말까..
+        그 이외에 법선벡터, 내적, 외적 등을 통해 더 다양한 내용을 처리할 수 있다
     */
 
     class Program
@@ -116,12 +116,11 @@ namespace Jong2DTest
             while (CloseGame == false)
             {
                 DateTime now = DateTime.Now;
-                if (now == current_time)
+                double frame_time = (now - current_time).TotalSeconds;
+                if (frame_time <= 0)
                 {
                     continue;
                 }
-
-                double frame_time = (now - current_time).TotalSeconds;
                 current_time = now;
 
                 HandleEvents(frame_time);

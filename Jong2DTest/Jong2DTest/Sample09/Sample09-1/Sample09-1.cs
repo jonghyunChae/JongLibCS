@@ -126,7 +126,11 @@ namespace Jong2DTest
             while (CloseGame == false)
             {
                 DateTime now = DateTime.Now;
-                double frame_time = (DateTime.Now - current_time).TotalSeconds;
+                double frame_time = (now - current_time).TotalSeconds;
+                if (frame_time <= 0)
+                {
+                    continue;
+                }
                 current_time = now;
 
                 HandleEvents(frame_time);
