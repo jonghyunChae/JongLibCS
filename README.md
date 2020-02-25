@@ -11,14 +11,15 @@ this is jong's library for C#
 - document : https://wiki.libsdl.org/FrontPage
 
 2. Network Library (ToDo)
+- TCP & UDP
 - Client Library
 - Server (host) Library
 - Serializer
 
 3. Server Library (ToDo) 
-- C# Async Server (Realtime Game Server)
-- IOCP (C++) Porting Library
-- Dabatase
+- C# Realtime Game Server (multi-thread & async programming with C#)
+- IOCP (C++) Porting Library (c++ dll library sample)
+- Dabatase (mssql)
 - Web Server (ASP.NET)
 
 4. Hosting (ToDo)
