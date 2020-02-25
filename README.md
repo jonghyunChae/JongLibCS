@@ -18,8 +18,8 @@ this is jong's library for C#
 
 3. Server Library (ToDo) 
 - C# Realtime Game Server (multi-thread & async programming with C#)
-- IOCP (C++) Porting Library (c++ dll library sample)
-- Dabatase (mssql)
+- C++ IOCP Porting Library (C++ IOCP/RIO + C# framework) 
+- Database (mssql + NoSQL)
 - Web Server (ASP.NET)
 
 4. Hosting (ToDo)
