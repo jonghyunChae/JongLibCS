@@ -1,7 +1,7 @@
 # JongLibCS
 this is jong's library for C#
 
-0. CSharpSample (for CSharp Beginner)
+0. CSharpSample (for C# Beginner)
 
 1. 2D Project (with SDL)
 - jong2D : 2d programming with sdl library
@@ -16,10 +16,10 @@ this is jong's library for C#
 - Serializer
 
 3. Server Library (ToDo) 
-- Dabatase
-- C# Async Server
-- Web Server
+- C# Async Server (Realtime Game Server)
 - IOCP (C++) Porting Library
+- Dabatase
+- Web Server (ASP.NET)
 
 4. Hosting (ToDo)
 - AWS or AZure
