@@ -260,12 +260,10 @@ namespace Jong2DTest
                         else if (e.Key == SDL.SDL_Keycode.SDLK_UP)
                         {
                             dir.y = 1;
-                            state = STATE.LEFT_RUN;
                         }
                         else if (e.Key == SDL.SDL_Keycode.SDLK_DOWN)
                         {
                             dir.y = -1;
-                            state = STATE.RIGHT_RUN;
                         }
                     }
                     break;

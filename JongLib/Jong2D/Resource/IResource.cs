@@ -4,6 +4,7 @@ namespace Jong2D
 {
     public interface IResource : IDisposable
     {
+        bool Disposed { get; }
         void Close();
     }
 
@@ -13,7 +14,7 @@ namespace Jong2D
 
         #region IDisposable Support
         private bool disposedValue = false; // 중복 호출을 검색하려면
-
+        public bool Disposed => disposedValue;
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
