@@ -33,13 +33,13 @@ namespace Jong2DTest.Sample13
                 case SDL.SDL_EventType.SDL_KEYDOWN:
                     {
                         if (e.Key == SDL.SDL_Keycode.SDLK_ESCAPE)
-                            Framework.Instance.Quit();
+                            Framework.Quit();
                         if (e.Key == SDL.SDL_Keycode.SDLK_RETURN)
-                            Framework.Instance.ChangeScene(new MainScene());
+                            Framework.ChangeScene(new MainScene());
                     }
                     break;
                 case SDL.SDL_EventType.SDL_QUIT:
-                    Framework.Instance.Quit();
+                    Framework.Quit();
                     break;
                 default:
                     break;

@@ -30,20 +30,17 @@ namespace Jong2D.Framework
         void Render();
     }
 
-    public class Framework
+    public static class Framework
     {
-        static Framework instance = new Framework();
-        public static Framework Instance => instance;
+        public static bool Stop { get; set; }
+        static bool running { get; set; }
+        static Stack<IScene> scenes { get; set; }
+        static IScene nextScene { get; set; }
+        static IScene CurrentScene => scenes.Peek();
 
-        public bool Stop { get; set; }
-        bool running { get; set; }
-        Stack<IScene> scenes { get; set; }
-        IScene nextScene { get; set; }
-        IScene CurrentScene => scenes.Peek();
+        public static event Action Closed;
 
-        public event Action Closed;
-
-        private Framework()
+        static Framework()
         {
             Stop = false;
             running = false;
@@ -51,7 +48,7 @@ namespace Jong2D.Framework
             nextScene = null;
         }
 
-        public void Run(IScene start_scene)
+        public static void Run(IScene start_scene)
         {
             if (running)
             {
@@ -94,7 +91,7 @@ namespace Jong2D.Framework
             Closed = null;
         }
 
-        private void handleEvent(IScene scene, double frame_time)
+        private static void handleEvent(IScene scene, double frame_time)
         {
             foreach (var gameEvent in Context.GetGameEvents())
             {
@@ -102,7 +99,7 @@ namespace Jong2D.Framework
             }
         }
 
-        private void update(IScene scene, double frame_time)
+        private static void update(IScene scene, double frame_time)
         {
             if (Stop == false)
             {
@@ -110,14 +107,14 @@ namespace Jong2D.Framework
             }
         }
 
-        private void render(IScene scene)
+        private static void render(IScene scene)
         {
             Context.ClearWindow();
             scene.Render();
             Context.UpdateWindow();
         }
 
-        private void setScene(IScene scene)
+        private static void setScene(IScene scene)
         {
             PopScene();
 
@@ -125,12 +122,12 @@ namespace Jong2D.Framework
             scene.Enter();
         }
 
-        public void ChangeScene(IScene scene)
+        public static void ChangeScene(IScene scene)
         {
             nextScene = scene;
         }
 
-        public void PushScene(IScene scene)
+        public static void PushScene(IScene scene)
         {
             if (scenes.Count > 0)
             {
@@ -141,7 +138,7 @@ namespace Jong2D.Framework
             scene.Enter();
         }
 
-        public bool PopScene()
+        public static bool PopScene()
         {
             if (scenes.Count > 0)
             {
@@ -152,7 +149,7 @@ namespace Jong2D.Framework
             return false;
         }
 
-        public void Quit()
+        public static void Quit()
         {
             running = false;
         }

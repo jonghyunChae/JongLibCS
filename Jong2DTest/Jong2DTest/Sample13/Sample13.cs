@@ -6,7 +6,7 @@ namespace Jong2DTest.Sample13
     {
         static void Main(string[] args)
         {
-            Framework.Instance.Run(new StartScene());
+            Framework.Run(new StartScene());
         }
     }
 }
