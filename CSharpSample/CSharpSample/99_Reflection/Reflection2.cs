@@ -72,14 +72,6 @@ namespace CSharpSample._99_Reflection
                 }
             }
 
-            
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "ReflectionTest.exe");
-            Assembly asm = Assembly.LoadFile(filePath);
-            object o = asm.CreateInstance("Activator");
-            foreach (var attr in asm.GetCustomAttributesData())
-            {
-                Console.WriteLine(attr);
-            }
         }
 
         public static void Foo([CallerFilePath] string filePath = null,
