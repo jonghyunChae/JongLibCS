@@ -65,6 +65,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Framework\Collision\BoundingBox.cs" />
+    <Compile Include="Framework\Collision\CircularBox.cs" />
+    <Compile Include="Framework\Collision\Collidable.cs" />
+    <Compile Include="Framework\Framework.cs" />
     <Compile Include="GameEvent.cs" />
     <Compile Include="Resource\IResource.cs" />
     <Compile Include="Resource\Sound\Music.cs" />
