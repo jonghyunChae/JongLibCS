@@ -10,7 +10,7 @@ this is jong's library for C#
 - download sdl dll : https://www.libsdl.org/projects/
 - document : https://wiki.libsdl.org/FrontPage
 
-2. Network Library (ToDo)
+2. Network Library (.Net Core / Doing..)
 - TCP & UDP
 - Client Library
 - Server (host) Library
