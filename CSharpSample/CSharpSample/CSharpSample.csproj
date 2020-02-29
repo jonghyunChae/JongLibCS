@@ -74,7 +74,7 @@
     <None Include="07_GC\GC1.cs" />
     <None Include="08_Thread\Thread2.cs" />
     <None Include="08_Thread\Thread1.cs" />
-    <Compile Include="09_Lock\Lock1.cs" />
+    <None Include="09_Lock\Lock1.cs" />
     <None Include="09_Lock\Lock2-2.cs" />
     <None Include="09_Lock\Lock2-1.cs" />
     <None Include="09_Lock\Lock3.cs" />
@@ -89,6 +89,8 @@
     <None Include="10_Async\Async6.cs" />
     <None Include="09_Lock\Lock2-3.cs" />
     <None Include="09_Lock\Lock2-4.cs" />
+    <None Include="97_Process\Process1.cs" />
+    <Compile Include="97_Process\Process2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
