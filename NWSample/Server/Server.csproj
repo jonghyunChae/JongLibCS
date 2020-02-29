@@ -9,4 +9,8 @@
     <OutputPath>..\Output</OutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\_Executer\_Executer.csproj" />
+  </ItemGroup>
+
 </Project>
