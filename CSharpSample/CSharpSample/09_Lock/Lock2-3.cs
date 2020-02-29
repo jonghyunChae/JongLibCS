@@ -10,8 +10,8 @@ namespace CSharpSample._9_Lock
 {
     class Lock2
     {
-        // AutoResetEvent (EventResetMode.AutoReset)
-        // ManualResetEvent (EventResetMode.ManualReset)
+        // AutoResetEvent (EventResetMode.AutoReset)        // wait 함수 통과 시, signal reset
+        // ManualResetEvent (EventResetMode.ManualReset)    // wait 함수 통과해도 signal reset되지 않음
         static EventWaitHandle evt = new EventWaitHandle(false, EventResetMode.AutoReset, "Lock2-3");
         public static void Main()
         {
@@ -59,6 +59,10 @@ namespace CSharpSample._9_Lock
             {
                 value += 2;
             }
+
+            //Console.WriteLine("Work Start2 : " + id);
+            //evt.WaitOne();
+            
             //Console.WriteLine("Work Event Set : " + id);
             //evt.Set();
             Console.WriteLine("Work End : " + id);
