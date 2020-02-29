@@ -42,7 +42,7 @@ namespace Executer
 
         // https://docs.microsoft.com/ko-kr/dotnet/core/tools/dotnet?tabs=netcore21
         // .Net Core CLI 참고
-        public static Process GetCoreExecuter(string fileName, params object[] args)
+        public static Process GetDotNetCoreProcess(string fileName, params object[] args)
         {
             string file = SearchDll(fileName);
             Console.WriteLine(file);

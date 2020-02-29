@@ -8,7 +8,7 @@ namespace ServiceHost
     {
         static void Main(string[] args)
         {
-            ClassExecuter.Run(typeof(Sample0), "Run");
+            ClassExecuter.Run(typeof(Sample), "Run");
             Console.ReadKey();
         }
     }
