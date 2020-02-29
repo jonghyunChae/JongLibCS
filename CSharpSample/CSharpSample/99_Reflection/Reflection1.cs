@@ -9,9 +9,9 @@ namespace CSharpSample._99_Reflection
 {
     class Reflection1
     {
-        class Activator
+        class Actor
         {
-            public Activator(int v)
+            public Actor(int v)
             {
                 Value = v;
             }
@@ -35,7 +35,12 @@ namespace CSharpSample._99_Reflection
 
         public static void Main()
         {
-            Activator a = new Activator(5);
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Type actor_type = assembly.GetTypes().First(x => x.Name == "Actor");
+            object obj = Activator.CreateInstance(actor_type, 5);
+            Actor a = obj as Actor;
+            Console.WriteLine(a.Value);
+
             MethodInfo method = null;
             Type type = a.GetType();
             method = type.GetMethod("First");

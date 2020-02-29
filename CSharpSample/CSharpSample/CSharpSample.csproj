@@ -51,7 +51,7 @@
     <None Include="01_Delegate\Delegate05.cs" />
     <None Include="02_Generic\Generic01.cs" />
     <None Include="02_Generic\Generic02.cs" />
-    <None Include="99_Reflection\Reflection1.cs" />
+    <Compile Include="99_Reflection\Reflection1.cs" />
     <None Include="99_Reflection\Reflection2.cs" />
     <None Include="99_Reflection\Reflection3.cs" />
     <None Include="04_Enumerable\Enumerable1.cs" />
@@ -90,7 +90,7 @@
     <None Include="09_Lock\Lock2-3.cs" />
     <None Include="09_Lock\Lock2-4.cs" />
     <None Include="97_Process\Process1.cs" />
-    <Compile Include="97_Process\Process2.cs" />
+    <None Include="97_Process\Process2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

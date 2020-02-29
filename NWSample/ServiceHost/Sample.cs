@@ -31,8 +31,10 @@ namespace ServiceHost
             StartServer(className);
             while (true)
             {
+                Console.WriteLine();
                 Console.WriteLine("0 : 종료 대기");
-                Console.WriteLine("1 : 클라이언트 생성");
+                Console.WriteLine("1 : 클라이언트 생성 (한 개)");
+                Console.WriteLine("2 : 클라이언트 생성 (여러 개)");
                 Console.Write("Input>> ");
 
                 string cmd = Console.ReadLine().Trim();
@@ -41,18 +43,21 @@ namespace ServiceHost
 
                 if (cmd == "1")
                 {
+                    StartClient(className);
+                }
+
+                if (cmd == "2")
+                {
                     Console.Write("몇 개 만드시겠습니까? >> ");
                     var n = Console.ReadLine();
                     if (int.TryParse(n, out int count))
                     {
                         for (int i = 0; i < count; ++i)
-                        {
                             StartClient(className);
-                        }
                     }
                     else
                     {
-                        StartClient(className);
+                        Console.WriteLine("개수 입력에 실패했습니다.");
                     }
                 }
             }
