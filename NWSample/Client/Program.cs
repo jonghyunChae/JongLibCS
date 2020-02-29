@@ -10,14 +10,20 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            var name = typeof(Program).Namespace;
-            Console.WriteLine($"{name} arg Len : {args.Length}");
+            // ex : Client.Sample0
+            string className = "Client.";
             if (args.Length <= 0)
             {
-                throw new Exception("Arg Count is zero!");
+                Console.WriteLine("Arg count is zero");
+                className += "Sample";
+            }
+            else
+            {
+                className += args[0];
             }
 
-            ClassExecuter.Run($"{name}.{args[0]}", "Run");
+            Console.WriteLine("Run >> " + className);
+            ClassExecuter.Run($"{className}", "Run");
             Console.ReadKey();
         }
     }
