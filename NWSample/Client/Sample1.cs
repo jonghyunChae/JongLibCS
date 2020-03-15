@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Client
 {
+    // bind & listen & connect & accept
     public class Sample1
     {
         public void Run()

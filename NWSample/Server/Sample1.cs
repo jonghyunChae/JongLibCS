@@ -6,6 +6,7 @@ using System.Net.Sockets;
 
 namespace Server
 {
+    // bind & listen & connect & accept
     public class Sample1
     {
         public void Run()
