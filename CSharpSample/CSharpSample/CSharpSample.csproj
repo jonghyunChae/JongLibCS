@@ -51,7 +51,8 @@
     <None Include="01_Delegate\Delegate05.cs" />
     <None Include="02_Generic\Generic01.cs" />
     <None Include="02_Generic\Generic02.cs" />
-    <Compile Include="99_Reflection\Reflection1.cs" />
+    <Compile Include="02_Generic\Generic03.cs" />
+    <None Include="99_Reflection\Reflection1.cs" />
     <None Include="99_Reflection\Reflection2.cs" />
     <None Include="99_Reflection\Reflection3.cs" />
     <None Include="04_Enumerable\Enumerable1.cs" />
