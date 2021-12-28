@@ -8,10 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>CSharpSample</RootNamespace>
     <AssemblyName>CSharpSample</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -92,6 +93,7 @@
     <None Include="09_Lock\Lock2-4.cs" />
     <None Include="97_Process\Process1.cs" />
     <None Include="97_Process\Process2.cs" />
+    <Compile Include="07_GC\GC3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
