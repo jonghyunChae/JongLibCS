@@ -11,15 +11,20 @@
     <Compile Remove="01_TPL_Basic\01_Backoff_Polly.cs" />
     <Compile Remove="01_TPL_Basic\02_Progress.cs" />
     <Compile Remove="01_TPL_Basic\03_Exception.cs" />
-    <Compile Remove="01_TPL_Basic\04_wait.cs" />
+    <Compile Remove="01_TPL_Basic\04_1_Wait.cs" />
+    <Compile Remove="01_TPL_Basic\05_ValueTask.cs" />
     <Compile Remove="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="01_TPL_Basic\05_ValueTask.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="01_TPL_Basic\01_Backoff_Polly.cs" />
     <None Include="01_TPL_Basic\02_Progress.cs" />
     <None Include="01_TPL_Basic\03_Exception.cs" />
-    <None Include="01_TPL_Basic\04_wait.cs" />
+    <None Include="01_TPL_Basic\04_1_Wait.cs" />
     <None Include="Program.cs" />
   </ItemGroup>
 
