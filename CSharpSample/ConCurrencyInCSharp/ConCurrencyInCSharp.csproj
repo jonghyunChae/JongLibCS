@@ -13,6 +13,9 @@
     <Compile Remove="01_TPL_Basic\03_Exception.cs" />
     <Compile Remove="01_TPL_Basic\04_1_Wait.cs" />
     <Compile Remove="01_TPL_Basic\05_ValueTask.cs" />
+    <Compile Remove="01_TPL_Basic\06_TaskCreationOptions.cs" />
+    <Compile Remove="02_AsyncEnumerable\01_Sample.cs" />
+    <Compile Remove="02_AsyncEnumerable\02_LinqAsync.cs" />
     <Compile Remove="Program.cs" />
   </ItemGroup>
 
@@ -25,7 +28,14 @@
     <None Include="01_TPL_Basic\02_Progress.cs" />
     <None Include="01_TPL_Basic\03_Exception.cs" />
     <None Include="01_TPL_Basic\04_1_Wait.cs" />
+    <None Include="01_TPL_Basic\06_TaskCreationOptions.cs" />
+    <None Include="02_AsyncEnumerable\01_Sample.cs" />
+    <None Include="02_AsyncEnumerable\02_LinqAsync.cs" />
     <None Include="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Async" Version="6.0.1" />
   </ItemGroup>
 
 </Project>
