@@ -1,0 +1,117 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="01_Delegate\Delegate01.cs" />
+    <Compile Remove="01_Delegate\Delegate02.cs" />
+    <Compile Remove="01_Delegate\Delegate03.cs" />
+    <Compile Remove="01_Delegate\Delegate04.cs" />
+    <Compile Remove="01_Delegate\Delegate05.cs" />
+    <Compile Remove="02_Generic\Generic01.cs" />
+    <Compile Remove="02_Generic\Generic02.cs" />
+    <Compile Remove="02_Generic\Generic03.cs" />
+    <Compile Remove="03_Collection\Collection1.cs" />
+    <Compile Remove="03_Collection\Collection2.cs" />
+    <Compile Remove="03_Collection\Collection3.cs" />
+    <Compile Remove="03_Collection\Collection4.cs" />
+    <Compile Remove="04_Enumerable\Enumerable1.cs" />
+    <Compile Remove="04_Enumerable\Enumerable2.cs" />
+    <Compile Remove="05_LINQ\LINQ1.cs" />
+    <Compile Remove="05_LINQ\LINQ2.cs" />
+    <Compile Remove="05_LINQ\LINQ3.cs" />
+    <Compile Remove="05_LINQ\LINQ4.cs" />
+    <Compile Remove="05_LINQ\LINQ5.cs" />
+    <Compile Remove="06_Disposal\Disposal1.cs" />
+    <Compile Remove="06_Disposal\Disposal2.cs" />
+    <Compile Remove="06_Disposal\Disposal3.cs" />
+    <Compile Remove="06_Disposal\Disposal4.cs" />
+    <Compile Remove="07_GC\GC1.cs" />
+    <Compile Remove="07_GC\GC2.cs" />
+    <Compile Remove="07_GC\GC3.cs" />
+    <Compile Remove="08_Thread\Thread1.cs" />
+    <Compile Remove="08_Thread\Thread2.cs" />
+    <Compile Remove="09_Lock\Lock1.cs" />
+    <Compile Remove="09_Lock\Lock2-1.cs" />
+    <Compile Remove="09_Lock\Lock2-2.cs" />
+    <Compile Remove="09_Lock\Lock2-3.cs" />
+    <Compile Remove="09_Lock\Lock2-4.cs" />
+    <Compile Remove="09_Lock\Lock3.cs" />
+    <Compile Remove="09_Lock\Lock4.cs" />
+    <Compile Remove="09_Lock\Lock5.cs" />
+    <Compile Remove="09_Lock\Lock6.cs" />
+    <Compile Remove="10_Async\Async1.cs" />
+    <Compile Remove="10_Async\Async2.cs" />
+    <Compile Remove="10_Async\Async3.cs" />
+    <Compile Remove="10_Async\Async4.cs" />
+    <Compile Remove="10_Async\Async5.cs" />
+    <Compile Remove="10_Async\Async6.cs" />
+    <Compile Remove="97_Process\Process1.cs" />
+    <Compile Remove="97_Process\Process2.cs" />
+    <Compile Remove="98_Pointer\Pointer1.cs" />
+    <Compile Remove="99_Reflection\Reflection1.cs" />
+    <Compile Remove="99_Reflection\Reflection2.cs" />
+    <Compile Remove="99_Reflection\Reflection3.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="02_Generic\Generic03.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="01_Delegate\Delegate01.cs" />
+    <None Include="01_Delegate\Delegate02.cs" />
+    <None Include="01_Delegate\Delegate03.cs" />
+    <None Include="01_Delegate\Delegate04.cs" />
+    <None Include="01_Delegate\Delegate05.cs" />
+    <None Include="02_Generic\Generic01.cs" />
+    <None Include="02_Generic\Generic02.cs" />
+    <None Include="03_Collection\Collection1.cs" />
+    <None Include="03_Collection\Collection2.cs" />
+    <None Include="03_Collection\Collection3.cs" />
+    <None Include="03_Collection\Collection4.cs" />
+    <None Include="04_Enumerable\Enumerable1.cs" />
+    <None Include="04_Enumerable\Enumerable2.cs" />
+    <None Include="05_LINQ\LINQ1.cs" />
+    <None Include="05_LINQ\LINQ2.cs" />
+    <None Include="05_LINQ\LINQ3.cs" />
+    <None Include="05_LINQ\LINQ4.cs" />
+    <None Include="05_LINQ\LINQ5.cs" />
+    <None Include="06_Disposal\Disposal1.cs" />
+    <None Include="06_Disposal\Disposal2.cs" />
+    <None Include="06_Disposal\Disposal3.cs" />
+    <None Include="06_Disposal\Disposal4.cs" />
+    <None Include="07_GC\GC1.cs" />
+    <None Include="07_GC\GC2.cs" />
+    <None Include="07_GC\GC3.cs" />
+    <None Include="08_Thread\Thread1.cs" />
+    <None Include="08_Thread\Thread2.cs" />
+    <None Include="09_Lock\Lock1.cs" />
+    <None Include="09_Lock\Lock2-1.cs" />
+    <None Include="09_Lock\Lock2-2.cs" />
+    <None Include="09_Lock\Lock2-3.cs" />
+    <None Include="09_Lock\Lock2-4.cs" />
+    <None Include="09_Lock\Lock3.cs" />
+    <None Include="09_Lock\Lock4.cs" />
+    <None Include="09_Lock\Lock5.cs" />
+    <None Include="09_Lock\Lock6.cs" />
+    <None Include="10_Async\Async1.cs" />
+    <None Include="10_Async\Async2.cs" />
+    <None Include="10_Async\Async3.cs" />
+    <None Include="10_Async\Async4.cs" />
+    <None Include="10_Async\Async5.cs" />
+    <None Include="10_Async\Async6.cs" />
+    <None Include="97_Process\Process1.cs" />
+    <None Include="97_Process\Process2.cs" />
+    <None Include="98_Pointer\Pointer1.cs" />
+    <None Include="99_Reflection\Reflection1.cs" />
+    <None Include="99_Reflection\Reflection2.cs" />
+    <None Include="99_Reflection\Reflection3.cs" />
+  </ItemGroup>
+
+</Project>
