@@ -51,6 +51,7 @@
     <Compile Remove="10_Async\Async4.cs" />
     <Compile Remove="10_Async\Async5.cs" />
     <Compile Remove="10_Async\Async6.cs" />
+    <Compile Remove="96_ExpresionTree\Expression_GetterSetter.cs" />
     <Compile Remove="97_Process\Process1.cs" />
     <Compile Remove="97_Process\Process2.cs" />
     <Compile Remove="98_Pointer\Pointer1.cs" />
@@ -106,6 +107,7 @@
     <None Include="10_Async\Async4.cs" />
     <None Include="10_Async\Async5.cs" />
     <None Include="10_Async\Async6.cs" />
+    <None Include="96_ExpresionTree\Expression_GetterSetter.cs" />
     <None Include="97_Process\Process1.cs" />
     <None Include="97_Process\Process2.cs" />
     <None Include="98_Pointer\Pointer1.cs" />
