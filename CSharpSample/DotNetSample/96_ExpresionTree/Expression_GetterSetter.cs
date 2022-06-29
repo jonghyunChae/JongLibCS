@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Reflection;
 
 namespace DotNetSample._96_ExpresionTree;
 
@@ -21,40 +22,65 @@ public enum StatKind
     Name
 }
 
-class Expression_GetterSetter
+static class Expression_GetterSetter
 {
     private static Dictionary<StatKind, Func<CharacterStatsInfo, object>> getterDic { get; } = new();
-    static dynamic GetValue(StatKind statKind, CharacterStatsInfo statInfo) => getterDic[statKind].Invoke(statInfo);
+
+    static dynamic GetValue(StatKind statKind, CharacterStatsInfo statInfo)
+    {
+        if (getterDic.TryGetValue(statKind, out var func))
+        {
+            return func(statInfo) ?? "";
+        }
+        return "";
+    }
 
     static Dictionary<StatKind, Action<CharacterStatsInfo, object>> setterDic { get; } = new();
-    static void SetValue(StatKind statKind, CharacterStatsInfo statInfo, dynamic value) => setterDic[statKind](statInfo, (object)value);
+
+    static void SetValue(StatKind statKind, CharacterStatsInfo statInfo, dynamic value)
+    {
+        if (setterDic.TryGetValue(statKind, out var func))
+        {
+            func(statInfo, (object)value);
+        }
+    }
 
     static void Main()
     {
-        CharacterStatsInfo playerInfo = new();
+        PlayerStatsInfo playerInfo = new();
         playerInfo.HP = 1;
         playerInfo.Damage = 2;
-        //playerInfo.Name = "abc";
+        playerInfo.Name = "abc";
 
-        BuildGetter(playerInfo.GetType());
-        BuildSetter(playerInfo.GetType());
+        BuildGetterV2(playerInfo);
+        BuildSetterV2(playerInfo);
 
 
         SetValue(StatKind.HP, playerInfo, 100);
-        //SetValue(StatKind.Name, playerInfo, "abc");
+        SetValue(StatKind.Name, playerInfo, "zzzz");
         Console.WriteLine(GetValue(StatKind.HP, playerInfo));
         Console.WriteLine(GetValue(StatKind.Damage, playerInfo));
-        //Console.WriteLine(GetValue(StatKind.Name, playerInfo));
+
+        var name = GetValue(StatKind.Name, playerInfo);
+        Console.WriteLine(GetValue(StatKind.Name, playerInfo));
 
     }
 
-    public static void BuildGetter(Type statInfoType)
+    public static List<PropertyInfo> GetStatKindProperties(this CharacterStatsInfo characterStatsInfo)
+        => characterStatsInfo
+            .GetType()
+            .GetProperties()
+            .Where(x => Enum.IsDefined(typeof(StatKind), x.Name))
+            .ToList();
+
+    // 상속 미지원
+    public static void BuildGetterV1(CharacterStatsInfo characterStatsInfo)
     {
-        var statProperties = statInfoType.GetProperties().Where(x => Enum.IsDefined(typeof(StatKind), x.Name));
+        var statProperties = characterStatsInfo.GetStatKindProperties();
         foreach (var property in statProperties)
         {
             StatKind statKind = (StatKind)Enum.Parse(typeof(StatKind), property.Name);
-            Console.WriteLine(statKind);
+            Console.WriteLine("GetterV1 : " + statKind);
 
             var statInfoParamExpr = Expression.Parameter(typeof(CharacterStatsInfo), "statsInfo");
             var propertyExpr = Expression.Property(
@@ -68,24 +94,69 @@ class Expression_GetterSetter
         }
     }
 
-    public static void BuildSetter(Type statInfoType)
+    // 상속 지원
+    public static void BuildGetterV2(CharacterStatsInfo characterStatsInfo)
     {
-        var statProperties = statInfoType.GetProperties().Where(x => Enum.IsDefined(typeof(StatKind), x.Name));
+        var statProperties = characterStatsInfo.GetStatKindProperties();
         foreach (var property in statProperties)
         {
             StatKind statKind = (StatKind)Enum.Parse(typeof(StatKind), property.Name);
-            Console.WriteLine(statKind);
+            Console.WriteLine("GetterV2 : " + statKind);
 
-            var statInfoParamExpr = Expression.Parameter(statInfoType, "statsInfo");
+            var inputInfoParamExpr = Expression.Parameter(typeof(CharacterStatsInfo), "input");
             var propertyExpr = Expression.Property(
-                statInfoParamExpr,
+                Expression.TypeAs(inputInfoParamExpr, property.ReflectedType!),
+                property.Name
+            );
+
+            var toObjectExpr = Expression.TypeAs(propertyExpr, typeof(object));
+            getterDic[statKind] = Expression.Lambda<Func<CharacterStatsInfo, object>>(toObjectExpr, inputInfoParamExpr)
+                .Compile();
+        }
+    }
+
+    // 상속 미지원
+    public static void BuildSetterV1(CharacterStatsInfo characterStatsInfo)
+    {
+        var statProperties = characterStatsInfo.GetStatKindProperties();
+        foreach (var property in statProperties)
+        {
+            StatKind statKind = (StatKind)Enum.Parse(typeof(StatKind), property.Name);
+            Console.WriteLine("Setter : " + statKind);
+
+            var inputInfoParamExpr = Expression.Parameter(typeof(CharacterStatsInfo), "inputInfo");
+            var propertyExpr = Expression.Property(
+                inputInfoParamExpr,
                 property.Name
             );
 
             var valueParamExpr = Expression.Parameter(typeof(object), "value");
             var toOriginTypeExpr = Expression.Convert(valueParamExpr, property.PropertyType);
             setterDic[statKind] = Expression.Lambda<Action<CharacterStatsInfo, object>>(Expression.Assign(propertyExpr, toOriginTypeExpr),
-                    statInfoParamExpr, valueParamExpr)
+                    inputInfoParamExpr, valueParamExpr)
+                .Compile();
+        }
+    }
+
+    // 상속 지원
+    public static void BuildSetterV2(CharacterStatsInfo characterStatsInfo)
+    {
+        var statProperties = characterStatsInfo.GetStatKindProperties();
+        foreach (var property in statProperties)
+        {
+            StatKind statKind = (StatKind)Enum.Parse(typeof(StatKind), property.Name);
+            Console.WriteLine("Setter : " + statKind);
+
+            var inputInfoParamExpr = Expression.Parameter(typeof(CharacterStatsInfo), "inputInfo");
+            var propertyExpr = Expression.Property(
+                Expression.TypeAs(inputInfoParamExpr, property.ReflectedType!),
+                property.Name
+            );
+
+            var valueParamExpr = Expression.Parameter(typeof(object), "value");
+            var toOriginTypeExpr = Expression.Convert(valueParamExpr, property.PropertyType);
+            setterDic[statKind] = Expression.Lambda<Action<CharacterStatsInfo, object>>(Expression.Assign(propertyExpr, toOriginTypeExpr),
+                    inputInfoParamExpr, valueParamExpr)
                 .Compile();
         }
     }
