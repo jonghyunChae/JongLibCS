@@ -16,6 +16,7 @@
     <Compile Remove="01_TPL_Basic\06_TaskCreationOptions.cs" />
     <Compile Remove="02_AsyncEnumerable\01_Sample.cs" />
     <Compile Remove="02_AsyncEnumerable\02_LinqAsync.cs" />
+    <Compile Remove="02_AsyncEnumerable\03_Cancel.cs" />
     <Compile Remove="Program.cs" />
   </ItemGroup>
 
@@ -31,6 +32,7 @@
     <None Include="01_TPL_Basic\06_TaskCreationOptions.cs" />
     <None Include="02_AsyncEnumerable\01_Sample.cs" />
     <None Include="02_AsyncEnumerable\02_LinqAsync.cs" />
+    <None Include="02_AsyncEnumerable\03_Cancel.cs" />
     <None Include="Program.cs" />
   </ItemGroup>
 
