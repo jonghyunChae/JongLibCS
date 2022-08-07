@@ -44,7 +44,7 @@ class Program
     {
         for (int i = 0; i < loopCount; i++)
         {
-            await TestValueTask(0); // 이렇게 바꿔도 ValueTask의 경우 참조 개체가 생성되지는 않음
+            await TestValueTask(i); // 이렇게 바꿔도 ValueTask의 경우 참조 개체가 생성되지는 않음
         }
     }
 
@@ -57,10 +57,26 @@ class Program
     {
         for (int i = 0; i < loopCount; i++)
         {
-            await TestTask(0); // Task.FromResult가 참조 개체를 생성하도록 변경
+          
+            await TestTask(i); // Task.FromResult가 참조 개체를 생성하도록 변경
         }
     }
 
+    /*
+        .NET 6는 int의 경우 -1 ~ 8 범위 내에서는 TaskCache.s_int32Tasks를 통해 미리 생성해 둔 Task 인스턴스를 재사용
+
+        // For Int32, we cache a range of common values, [-1,9).
+        else if (typeof(TResult) == typeof(int))
+        {
+            // Compare to constants to avoid static field access if outside of cached range.
+            int value = (int)(object)result!;
+            if ((uint)(value - TaskCache.InclusiveInt32Min) < (TaskCache.ExclusiveInt32Max - TaskCache.InclusiveInt32Min))
+            {
+                Task<int> task = TaskCache.s_int32Tasks[value - TaskCache.InclusiveInt32Min];
+                return Unsafe.As<Task<TResult>>(task); // Unsafe.As avoids a type check we know will succeed
+            }
+        }
+     */
     static Task<int> TestTask(int value)
     {
         return Task.FromResult(value);
