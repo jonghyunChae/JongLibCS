@@ -9,7 +9,7 @@ namespace ConCurrencyInCSharp._00_Thread
 {
     internal class _00_CacheSharing
     {
-        // 여길 바꿔서 테스트
+        // 여길 바꿔서 테스트. offset = 1, gap = 0 / offset = 16, gap = 0 / offset = 16, gap = 16
         const int offset = 1;
         const int gap = 0;
         public static int[] sharedData = new int[4 * offset + gap * offset];
