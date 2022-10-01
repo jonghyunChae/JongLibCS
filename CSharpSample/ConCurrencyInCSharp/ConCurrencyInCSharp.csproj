@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="00_Thread\00_CacheSharing.cs" />
     <Compile Remove="01_TPL_Basic\01_Backoff_Polly.cs" />
     <Compile Remove="01_TPL_Basic\02_Progress.cs" />
     <Compile Remove="01_TPL_Basic\03_Exception.cs" />
@@ -17,7 +18,12 @@
     <Compile Remove="02_AsyncEnumerable\01_Sample.cs" />
     <Compile Remove="02_AsyncEnumerable\02_LinqAsync.cs" />
     <Compile Remove="02_AsyncEnumerable\03_Cancel.cs" />
+    <Compile Remove="03_ValueTask\01_Performance.cs" />
     <Compile Remove="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="00_Thread\00_CacheSharing.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +39,7 @@
     <None Include="02_AsyncEnumerable\01_Sample.cs" />
     <None Include="02_AsyncEnumerable\02_LinqAsync.cs" />
     <None Include="02_AsyncEnumerable\03_Cancel.cs" />
+    <None Include="03_ValueTask\01_Performance.cs" />
     <None Include="Program.cs" />
   </ItemGroup>
 
