@@ -63,8 +63,27 @@ namespace ConCurrencyInCSharp._01_TPL_Basic
 
         static TaskCompletionSource tcs = null!;
 
+        public class TestOptionAttribute : Attribute
+        {
+            public int Value;
+
+            public TestOptionAttribute(int value)
+            {
+                Value = value;
+            }
+        }
+
+        [TestOption(1)]
+        class Test
+        {
+        }
+
         static async Task Main()
         {
+            var fst = (TestOptionAttribute)typeof(Test).GetCustomAttributes(typeof(TestOptionAttribute), true).First();
+            Console.WriteLine(fst.Value);
+
+
             await TaskCompleteTest();
             Console.WriteLine();
             await TimeoutTest();
