@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Jong2D.Utility;
 using SDL2;
+using static SDL2.SDL;
 
 namespace Jong2D
 {
@@ -155,16 +157,59 @@ namespace Jong2D
             return new Image(texture);
         }
 
-        public static void Draw(Utility.Rectangle rect, Utility.Color color)
+        public static void Draw(Utility.Rectangle rect, Utility.Color color, bool fill = false)
         {
             SDL.SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-            var sdl_rect = new SDL.SDL_FRect();
-            sdl_rect.x = (float)rect.x;
-            sdl_rect.y = (float)(Context.screen_height - rect.y - rect.height);
-            sdl_rect.w = rect.width;
-            sdl_rect.h = rect.height;
 
-            SDL.SDL_RenderDrawRectF(renderer, ref sdl_rect);
+            double x, y;
+            int w, h;
+
+            x = rect.x;
+            y = (Context.screen_height - rect.y - rect.height);
+            h = rect.height;
+            w = rect.width;
+
+            if (fill)
+            {
+                var sdl_rect = new SDL_Rect()
+                {
+                    x = (int)x,
+                    y = (int)y,
+                    h = rect.height,
+                    w = rect.width
+                };
+                SDL.SDL_RenderFillRect(renderer, ref sdl_rect);
+            }
+            else
+            {
+                var sdl_rect = new SDL.SDL_FRect()
+                {
+                    x = (float)x,
+                    y = (float)y,
+                    h = rect.height,
+                    w = rect.width
+                };
+                SDL.SDL_RenderDrawRectF(renderer, ref sdl_rect);
+            }
+        }
+
+        public static void DrawPoint(Utility.Vector2D vector, Utility.Color color)
+        {
+            SDL.SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
+            SDL.SDL_RenderDrawPoint(renderer, (int)vector.x, Context.screen_height - (int)(vector.y));
+        }
+
+        public static void DrawPoint(Utility.Vector2D vector, int size, Utility.Color color)
+        {
+            Draw(new Utility.Rectangle(vector - (size / 2), new Size2D(size, size)), color, true);
+        }
+
+        public static void DrawLine(Utility.Vector2D from, Utility.Vector2D to, Utility.Color color)
+        {
+            SDL.SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
+            SDL.SDL_RenderDrawLine(renderer, (int)from.x, Context.screen_height - (int)from.y, (int)to.x, Context.screen_height - (int)to.y);
         }
     }
 }

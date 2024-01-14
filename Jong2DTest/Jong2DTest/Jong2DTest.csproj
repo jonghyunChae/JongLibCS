@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Jong2DTest</RootNamespace>
     <AssemblyName>Jong2DTest</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Test\VectorTest.cs" />
     <None Include="Sample12\framework\Framework.cs" />
     <None Include="Sample12\framework\ResourceFactory.cs" />
     <None Include="Sample12\main\Sample12_main.cs" />
@@ -83,10 +84,10 @@
     <None Include="Sample12\Sample12.cs" />
     <None Include="Sample12\start\Sample12_start.cs" />
     <Compile Include="Sample13\ResourceFactory.cs" />
-    <Compile Include="Sample13\main\Sample13_main.cs" />
-    <Compile Include="Sample13\main\Sample13_main_Object.cs" />
-    <Compile Include="Sample13\Sample13.cs" />
-    <Compile Include="Sample13\start\Sample13_start.cs" />
+    <None Include="Sample13\main\Sample13_main.cs" />
+    <None Include="Sample13\main\Sample13_main_Object.cs" />
+    <None Include="Sample13\Sample13.cs" />
+    <None Include="Sample13\start\Sample13_start.cs" />
     <None Include="Sample11\Sample11-2\Sample11-2.cs" />
     <None Include="Sample11\Sample11-2\Sample11-2_Object.cs" />
     <None Include="Sample10\Sample10.cs" />
