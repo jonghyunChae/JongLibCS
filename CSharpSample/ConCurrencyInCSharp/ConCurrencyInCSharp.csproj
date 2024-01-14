@@ -20,6 +20,7 @@
     <Compile Remove="02_AsyncEnumerable\02_LinqAsync.cs" />
     <Compile Remove="02_AsyncEnumerable\03_Cancel.cs" />
     <Compile Remove="03_ValueTask\01_Performance.cs" />
+    <Compile Remove="999_Memory\01_StackAlloc.cs" />
     <Compile Remove="Program.cs" />
   </ItemGroup>
 
@@ -42,6 +43,7 @@
     <None Include="02_AsyncEnumerable\02_LinqAsync.cs" />
     <None Include="02_AsyncEnumerable\03_Cancel.cs" />
     <None Include="03_ValueTask\01_Performance.cs" />
+    <None Include="999_Memory\01_StackAlloc.cs" />
     <None Include="Program.cs" />
   </ItemGroup>
 
